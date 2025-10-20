@@ -1,11 +1,11 @@
 import React from 'react'
 
-function food() {
+function page() {
   return (
     <div>
-      <h1>food</h1>
+      <h1>Login Page</h1>
     </div>
   )
 }
 
-export default food
+export default page
