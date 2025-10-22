@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-
+import { motion } from 'framer-motion';
 function Page() {
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
@@ -44,7 +44,7 @@ function Page() {
   }, [search, data]);
 
   return (
-    <div className="p-6 bg-[#AFC9DC]">
+    <div className="p-6 bg-[#AFC9DC] dark:bg-[#352F44]">
       <h1 className="text-3xl font-bold mb-4">Forex Market</h1>
 
       <input
@@ -62,9 +62,14 @@ function Page() {
           {filtered.map((item, index) => {
             const [base, quote] = item.displaySymbol.split("/");
             return (
-              <div
+              <motion.div
+                     initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.02 }}
+
                 key={index}
-                className="border rounded-lg bg-[#F2F4F6] p-4 shadow-md hover:shadow-lg transition"
+                className="border rounded-lg bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] p-4 shadow-md hover:shadow-lg transition"
               >
                 <div className="flex items-center space-x-3">
                   <div className="text-3xl">
@@ -76,7 +81,7 @@ function Page() {
                     {/* <p className="text-sm text-gray-500">{item.symbol}</p> */}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
