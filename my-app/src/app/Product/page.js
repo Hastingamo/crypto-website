@@ -84,7 +84,7 @@ function Page() {
                 </p>
                                 <p>🔄 Volume: ${item.total_volume.toLocaleString()}</p>
                   {/* <Image */}
-                  <CoinChart coinId={item.id}   />
+                  {/* <CoinChart coinId={item.id}   /> */}
               </div>
             ))}
           </div>
