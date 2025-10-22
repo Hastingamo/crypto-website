@@ -1,12 +1,15 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
+import { motion } from "framer-motion";
 import CoinChart from "../Component/chart";
 function Page() {
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [search, setSearch] = useState("");
+  const [newsData, setNewsData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
     crypto();
     setLoading(true);
@@ -22,18 +25,44 @@ function Page() {
   // };
 
   const crypto = () => {
-    // fetch(
-    //   `https://finnhub.io/api/v1/crypto/symbol?exchange=binance&token=${apikey}`
-    // )
+
         fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1"
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc"
     )
       .then((response) => response.json())
       .then((data) => {
-        setData(data.slice(0, 30));
+        // setData(data.slice(0, 30));
+        setData(data);
         setLoading(false);
       });
   };
+  const news = () => {
+  fetch(`https://finnhub.io/api/v1/news?category=crypto&token=${apikey}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setNewsData(data.slice(0, 10));
+        
+        console.log(data);
+      });
+  };
+
+  // const searchCrypto = (e) => {
+  //   setSearch(e.target.value);
+  //   const filtered = data.filter((item) =>
+  //     item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+  //     item.symbol.toLowerCase().includes(e.target.value.toLowerCase())
+  //   );
+  //   setFilteredData(filtered);
+  // };
+   
+  useEffect(() => {
+    
+    const filtered = data.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.symbol.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [search, data]);
 
   // const forex = () => {
   //   fetch(
@@ -60,12 +89,23 @@ function Page() {
         <p>Loading...</p>
       ) : (
         <>
-          {" "}
+          <div>
+            <input  className="m-4 p-2 border-2 rounded" type="text" placeholder="Search Crypto"  value={search} onChange={(e) => setSearch(e.target.value)} />
+            <button className="m-4 p-2 bg-blue-600 text-white rounded" onClick={news}>News</button>
+          </div>
           <div className="grid grid-cols-1 ">
-            {data.map((item, index) => (
-              <div
+            {filteredData.map((item, index) => (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.02 }}
                 key={index}
-                className="m-4 p-6 border-2 rounded grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7"
+                // onViewportEnter={}
+                // onViewportLeave={}
+                viewport={{once:true}}
+                whileInView={{opacity: 1, y:0}}
+                className="m-4 p-6 border-2 shadow-2xl xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7"
               >
                 <Image src={item.image} alt={item.name} width={50} height={50} />
                 <p>
@@ -85,7 +125,7 @@ function Page() {
                                 <p>🔄 Volume: ${item.total_volume.toLocaleString()}</p>
                   {/* <Image */}
                   {/* <CoinChart coinId={item.id}   /> */}
-              </div>
+              </motion.div>
             ))}
           </div>
         </>
