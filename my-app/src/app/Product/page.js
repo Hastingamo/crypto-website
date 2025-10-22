@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import CoinChart from "../Component/chart";
 function Page() {
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
@@ -64,7 +65,7 @@ function Page() {
             {data.map((item, index) => (
               <div
                 key={index}
-                className="m-4 p-6 border-2 rounded grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-6"
+                className="m-4 p-6 border-2 rounded grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7"
               >
                 <Image src={item.image} alt={item.name} width={50} height={50} />
                 <p>
@@ -81,6 +82,9 @@ function Page() {
                 >
                   1min Change: {item.price_change_percentage_24h.toFixed(2)}%
                 </p>
+                                <p>🔄 Volume: ${item.total_volume.toLocaleString()}</p>
+                  {/* <Image */}
+                  <CoinChart coinId={item.id}   />
               </div>
             ))}
           </div>
