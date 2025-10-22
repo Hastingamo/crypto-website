@@ -87,7 +87,7 @@ function Page() {
   }, []);
 
   return (
-    <div className="bg-[#AFC9DC] ">
+    <div className="bg-[#AFC9DC] dark:bg-[#352F44]">
       <h1 className="ml-4">crypto Page</h1>
       {loading ? (
         <p>Loading...</p>
@@ -110,7 +110,7 @@ function Page() {
                 // onViewportLeave={}
                 viewport={{once:true}}
                 whileInView={{opacity: 1, y:0}}
-                className="m-4 p-6 border-2 bg-[#F2F4F6]  xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7"
+                className="m-4 p-6 border-2 bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7"
               >
                 <Image src={item.image} alt={item.name} width={50} height={50} />
                 <p>
