@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState, useEffect, use } from "react";
 import { motion } from "framer-motion";
 import CoinChart from "../Component/chart";
+import { useRouter } from "next/navigation";
 function Page() {
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
@@ -14,7 +15,10 @@ function Page() {
     crypto();
     setLoading(true);
   }, []);
-
+  const router = useRouter();
+  const forex = () => {
+    router.push('/Product/Forex');
+  };
   // const stock = () => {
   //   fetch(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${apikey}`)
   //     .then((response) => response.json())
@@ -92,6 +96,7 @@ function Page() {
           <div>
             <input  className="m-4 p-2 border-2 rounded" type="text" placeholder="Search Crypto"  value={search} onChange={(e) => setSearch(e.target.value)} />
             <button className="m-4 p-2 bg-blue-600 text-white rounded" onClick={news}>News</button>
+            <button className="m-4 p-2 bg-green-600 text-white rounded" onClick={forex}>forex</button>
           </div>
           <div className="grid grid-cols-1 ">
             {filteredData.map((item, index) => (
