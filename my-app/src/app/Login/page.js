@@ -6,7 +6,7 @@ function Page() {
   return (
     <div className="overflow-hidden">
       <h1>Login Page</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[1rem]">
+      <div className="grid grid-cols-1 md:grid-cols-2 ">
         <div className="w-4/5 ml-[2rem] md:ml-2 md:w-full border h-screen">
           <h1 className="text-center text-3xl md:text-4xl lg:text-5xl mt-14 lg:mt-28 xl:mt-10" >
             Welcome Back
@@ -35,7 +35,7 @@ function Page() {
                 type="password"
                 id="password"
                 name="password"
-                className="border relative py-2 md:py-4 md:top-4 lg:top-14 left-2 w-[80%] translate-x-[.8rem] md:translate-x-[2rem] lg:translate-x-[-3rem]"
+                className="border relative py-2 md:py-4 xl:py-2 md:top-4 lg:top-14 left-2 w-[80%] translate-x-[.8rem] md:translate-x-[2rem] lg:translate-x-[-3rem]"
                 required
               />
             </div>
@@ -44,14 +44,8 @@ function Page() {
             </button>
           </form>
         </div>
-        <div>
-          <Image
-            className="w-full h-full object-cover"
-            src="/images/download.png"
-            width={400}
-            height={100}
-            alt="Login Image"
-          />
+        <div className="bg-signup ">
+          <h1>hello world</h1>
         </div>
       </div>
     </div>

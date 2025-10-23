@@ -1,11 +1,19 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 function Page() {
   return (
-    <div>
+    <div className="overflow-y-hidden">
       <h1>Signup Page</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="w-4/5 ml-[2rem] md:ml-2 md:w-full border h-screen">
+      <div className="grid bg-signup  md:bg-none grid-cols-1 md:grid-cols-2">
+        <motion.div
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 2 }}
+          initial={{ opacity: 0, scale: 0.8, y: 730 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          className="w-4/5 ml-[2rem] bg-white md:ml-2 md:w-full border h-screen"
+        >
           <h1 className="text-center text-3xl md:text-4xl lg:text-5xl mt-10">
             Create an Account
           </h1>
@@ -22,12 +30,14 @@ function Page() {
                 type="text"
                 id="text"
                 name="username"
-                className="border relative top-4 py-1 lg:top-8 md:py-4 xl:py-1 left-2 w-[80%] translate-x-[1rem] lg:translate-x-[20px] xl:translate-x-[-6rem]" 
+                className="border relative top-4 py-1 lg:top-8 md:py-4 xl:py-1 left-2 w-[80%] translate-x-[1rem] lg:translate-x-[20px] xl:translate-x-[-6rem]"
                 required
               />
             </div>
             <div className="mt-[1rem] lg:mt-[3rem]">
-              <label htmlFor="email" className="md:text-2xl">Email:</label>
+              <label htmlFor="email" className="md:text-2xl">
+                Email:
+              </label>
               <input
                 type="email"
                 id="email"
@@ -37,7 +47,9 @@ function Page() {
               />
             </div>
             <div className="mt-[3rem]">
-              <label htmlFor="password" className="md:text-2xl">Password:</label>
+              <label htmlFor="password" className="md:text-2xl">
+                Password:
+              </label>
               <input
                 type="password"
                 id="password"
@@ -47,7 +59,9 @@ function Page() {
               />
             </div>
             <div className="mt-[2rem] xl:mt-[3rem]">
-              <label htmlFor="confirmPassword" className="md:text-2xl">Confirm Password:</label>
+              <label htmlFor="confirmPassword" className="md:text-2xl">
+                Confirm Password:
+              </label>
               <input
                 type="password"
                 id="confirmPassword"
@@ -56,19 +70,14 @@ function Page() {
                 required
               />
             </div>
-            <button type="submit" className="p-5 border bg-black text-white">Signup</button>
+            <button type="submit" className="p-5 border bg-black text-white">
+              Signup
+            </button>
           </form>
+        </motion.div>
+        <div className="bg-signups">
+          <h1>hello world</h1>
         </div>
-                <div cla>
-                  <Image
-                    className="w-full object-cover"
-                    src="/images/download.png"
-                    
-                    width={400}
-                    height={100}
-                    alt="Login Image"
-                  />
-                </div>  
       </div>
     </div>
   );
