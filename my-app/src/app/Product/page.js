@@ -90,7 +90,23 @@ function Page() {
     <div className="bg-[#AFC9DC] dark:bg-[#352F44]">
       <h1 className="ml-4">crypto Page</h1>
       {loading ? (
-        <p>Loading...</p>
+   <div className="flex justify-center items-center h-screen ">
+      <motion.div
+        initial={{ opacity: 0, y: 20, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: -20, scale: 0.9 }}
+        whileHover={{ scale: 1.05, rotate: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 10,
+          duration: 0.4,
+        }}
+        className=""
+      >
+        <div className="h-12 w-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
+      </motion.div>
+    </div>
       ) : (
         <>
           <div>
@@ -114,7 +130,7 @@ function Page() {
               >
                 <Image src={item.image} alt={item.name} width={50} height={50} />
                 <p>
-                  #{index + 1} {item.name} ({item.symbol.toUpperCase()})
+                  #{index + 1} {item.name} ({item.symbol.toUpperCase()} || {item.category})
                 </p>
                 <p>💰 Price: ${item.current_price.toLocaleString()}</p>
                 <p>📈 Market Cap: ${item.market_cap.toLocaleString()}</p>
@@ -131,6 +147,17 @@ function Page() {
                   {/* <Image */}
                   {/* <CoinChart coinId={item.id}   /> */}
               </motion.div>
+            ))}
+          </div>
+          <div className="grid grid-cols-1">
+            {newsData.map((newsItem, index) => (
+              <div key={index} className="m-4 p-4 border-2 rounded-lg bg-white dark:bg-gray-800">
+                <h1 className="font-bold">{newsItem.title}</h1>
+                <p className="text-sm text-gray-600">{newsItem.description}</p>
+                <a href={newsItem.url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+                  Read more
+                </a>
+              </div>
             ))}
           </div>
         </>
