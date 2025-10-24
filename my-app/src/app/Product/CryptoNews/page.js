@@ -66,7 +66,6 @@ function Page() {
                 className="m-4 p-4 border-2 rounded-lg bg-white dark:bg-gray-800"
               >
                 <Image
-                  src={newsItem.image}
                   alt={newsItem.headline}
                   width={400}
                   height={200}
