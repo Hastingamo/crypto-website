@@ -9,7 +9,6 @@ function Page() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [newsData, setNewsData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
     crypto();
@@ -19,6 +18,7 @@ function Page() {
   const forex = () => {
     router.push('/Product/Forex');
   };
+  
   // const stock = () => {
   //   fetch(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${apikey}`)
   //     .then((response) => response.json())
@@ -41,23 +41,10 @@ function Page() {
       });
   };
   const news = () => {
-  fetch(`https://finnhub.io/api/v1/news?category=crypto&token=${apikey}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setNewsData(data.slice(0, 10));
-        
-        console.log(data);
-      });
+    router.push("/Product/CryptoNews")
   };
 
-  // const searchCrypto = (e) => {
-  //   setSearch(e.target.value);
-  //   const filtered = data.filter((item) =>
-  //     item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-  //     item.symbol.toLowerCase().includes(e.target.value.toLowerCase())
-  //   );
-  //   setFilteredData(filtered);
-  // };
+
    
   useEffect(() => {
     
@@ -68,16 +55,7 @@ function Page() {
     setFilteredData(filtered);
   }, [search, data]);
 
-  // const forex = () => {
-  //   fetch(
-  //     `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setData(data.slice(0, 10));
-  //       setLoading(false);
-  //     });
-  // };
+
   useEffect(() => {
     const interval = setInterval(() => {
       crypto();
@@ -149,16 +127,8 @@ function Page() {
               </motion.div>
             ))}
           </div>
-          <div className="grid grid-cols-1">
-            {newsData.map((newsItem, index) => (
-              <div key={index} className="m-4 p-4 border-2 rounded-lg bg-white dark:bg-gray-800">
-                <h1 className="font-bold">{newsItem.title}</h1>
-                <p className="text-sm text-gray-600">{newsItem.description}</p>
-                <a href={newsItem.url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-                  Read more
-                </a>
-              </div>
-            ))}
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+
           </div>
         </>
       )}
