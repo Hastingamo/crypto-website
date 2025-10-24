@@ -1,8 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["coin-images.coingecko.com"],
-     domains: ["static.finnhub.io", "static2.finnhub.io"],
+    domains: [
+      "static.finnhub.io",
+      "static2.finnhub.io",
+      "cdn.finnhub.io",
+      "coin-images.coingecko.com",
+            "images.investinglive.com",
+            //  "data.bloomberglp.com"  
+    ],
   },
 };
 

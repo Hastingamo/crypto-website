@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import CoinChart from "../Component/chart";
 import { useRouter } from "next/navigation";
