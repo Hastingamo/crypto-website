@@ -1,82 +1,185 @@
 "use client";
-import React from "react";
-import Image from "next/image";
+import React, { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../Component/Firebase";
+
 function Page() {
+  const router = useRouter();
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    setError(null);
+    setMessage(null);
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      // ✅ Correct argument order: (auth, email, password)
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // ✅ Send verification email
+      await sendEmailVerification(user);
+
+      // ✅ Save user info in localStorage
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({ userName, gender, email })
+      );
+
+      setMessage(
+        "Registration successful! Please check your email for verification."
+      );
+
+      // ✅ Reset form
+      setUserName("");
+      setEmail("");
+      setGender("");
+      setPassword("");
+      setConfirmPassword("");
+
+      // Optionally navigate to login page
+      // router.push("/login");
+    } catch (err) {
+      setError(err.message || "An unknown error occurred.");
+    }
+  };
+
   return (
     <div className="overflow-y-hidden">
-      <h1>Signup Page</h1>
-      <div className="grid bg-signup  md:bg-none grid-cols-1 md:grid-cols-2">
+      <h1 className="text-center text-3xl font-bold mt-6">Signup Page</h1>
+
+      <div className="grid bg-signup md:bg-none grid-cols-1 md:grid-cols-2">
         <motion.div
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 2 }}
-          initial={{ opacity: 0, scale: 0.8, y: 730 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          className="w-4/5 ml-[2rem] bg-white md:ml-2 md:w-full border h-screen"
+          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9, y: 50 }}
+          className="w-4/5 mx-auto md:w-full bg-white border rounded-xl shadow-lg p-6 mt-6 md:mt-0"
         >
-          <h1 className="text-center text-3xl md:text-4xl lg:text-5xl mt-10">
+          <h2 className="text-center text-3xl md:text-4xl lg:text-5xl mb-4">
             Create an Account
-          </h1>
-          <p className="text-center ml-[4rem] mt-2 md:text-2xl w-[60%] md:w-[80%] md:ml-[2rem] xl:ml-[5rem]">
-            to be able to see live chart or trade crypto is here
+          </h2>
+          <p className="text-center text-gray-600 mb-8">
+            To access live charts and trade crypto, sign up below.
           </p>
 
-          <form className=" space-y-4  py-5 px-4">
+          <form onSubmit={handleFormSubmit} className="space-y-5">
+            {/* Username */}
             <div>
-              <label htmlFor="username" className="md:text-2xl">
-                Username:
+              <label htmlFor="username" className="block text-lg font-medium">
+                Username
               </label>
               <input
                 type="text"
-                id="text"
-                name="username"
-                className="border relative top-4 py-1 lg:top-8 md:py-4 xl:py-1 left-2 w-[80%] translate-x-[1rem] lg:translate-x-[20px] xl:translate-x-[-6rem]"
+                id="username"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
-            <div className="mt-[1rem] lg:mt-[3rem]">
-              <label htmlFor="email" className="md:text-2xl">
-                Email:
+
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-lg font-medium">
+                Email
               </label>
               <input
                 type="email"
                 id="email"
-                name="email"
-                className="border relative top-10 py-1 md:py-4 xl:py-1 left-2 w-[80%] translate-x-[-2rem] md:translate-x-[-45px] xl:translate-x-[-3rem]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
-            <div className="mt-[3rem]">
-              <label htmlFor="password" className="md:text-2xl">
-                Password:
+
+            {/* Password */}
+            <div>
+              <label htmlFor="password" className="block text-lg font-medium">
+                Password
               </label>
               <input
                 type="password"
                 id="password"
-                name="password"
-                className="border relative top-4 xl:top-10 py-1 md:py-4 xl:py-1 left-2 w-[80%] translate-x-[1rem] md:translate-x-[20px] xl:translate-x-[-6rem]"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
-            <div className="mt-[2rem] xl:mt-[3rem]">
-              <label htmlFor="confirmPassword" className="md:text-2xl">
-                Confirm Password:
+
+            {/* Confirm Password */}
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-lg font-medium"
+              >
+                Confirm Password
               </label>
               <input
                 type="password"
                 id="confirmPassword"
-                name="confirmPassword"
-                className="border relative top-4 xl:top-3 py-1 md:py-4 xl:py-1 left-2 w-[80%] translate-x-[1rem] md:translate-x-[20px] xl:translate-x-[1rem]"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
-            <button type="submit" className="p-5 border bg-black text-white">
-              Signup
+
+            {/* Gender */}
+            <div>
+              <label htmlFor="gender" className="block text-lg font-medium">
+                Gender
+              </label>
+              <select
+                id="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1 focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            {/* Error / Success Messages */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {message && <p className="text-green-500 text-sm">{message}</p>}
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition"
+            >
+              Sign Up
             </button>
           </form>
         </motion.div>
-        <div className="bg-signups">
-          <h1>hello world</h1>
+
+        <div className="hidden md:flex justify-center items-center bg-signups text-white text-3xl font-semibold">
+          Welcome to CryptoLive!
         </div>
       </div>
     </div>
