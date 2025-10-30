@@ -17,6 +17,7 @@ function Header() {
        <Link href="/Signup"> <h1>Sign Up</h1> </Link>
        <Link href="/News"> <h1>News</h1> </Link>
        <Link href="/Register"><h1>register</h1></Link>
+       <Link href="Wallet"><h1>wallet</h1></Link>
       </div>
       <div className="grid p-4 grid-cols-4 md:hidden">
         <h1>Dams</h1>
