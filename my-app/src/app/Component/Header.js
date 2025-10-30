@@ -20,8 +20,8 @@ function Header() {
       </div>
       <div className="grid p-4 grid-cols-4 md:hidden">
         <h1>Dams</h1>
-        <h1>login</h1>
-        <h1>Sign Up</h1>
+        <Link href="/Login"><h1>login</h1></Link>
+        <Link href="/Signup"><h1>Sign Up</h1></Link>
         {/* <img src="" alt="" /> */}
       </div>
     </>

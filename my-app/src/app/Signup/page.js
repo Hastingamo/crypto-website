@@ -29,7 +29,6 @@ function Page() {
     }
 
     try {
-      // ✅ Correct argument order: (auth, email, password)
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -37,10 +36,8 @@ function Page() {
       );
       const user = userCredential.user;
 
-      // ✅ Send verification email
       await sendEmailVerification(user);
 
-      // ✅ Save user info in localStorage
       localStorage.setItem(
         "userData",
         JSON.stringify({ userName, gender, email })
@@ -50,22 +47,19 @@ function Page() {
         "Registration successful! Please check your email for verification."
       );
 
-      // ✅ Reset form
       setUserName("");
       setEmail("");
       setGender("");
       setPassword("");
       setConfirmPassword("");
 
-      // Optionally navigate to login page
-      // router.push("/login");
     } catch (err) {
       setError(err.message || "An unknown error occurred.");
     }
   };
 
   return (
-    <div className="overflow-y-hidden">
+    <div className="">
       <h1 className="text-center text-3xl font-bold mt-6">Signup Page</h1>
 
       <div className="grid bg-signup md:bg-none grid-cols-1 md:grid-cols-2">
@@ -83,7 +77,6 @@ function Page() {
           </p>
 
           <form onSubmit={handleFormSubmit} className="space-y-5">
-            {/* Username */}
             <div>
               <label htmlFor="username" className="block text-lg font-medium">
                 Username
@@ -98,7 +91,6 @@ function Page() {
               />
             </div>
 
-            {/* Email */}
             <div>
               <label htmlFor="email" className="block text-lg font-medium">
                 Email
@@ -113,7 +105,6 @@ function Page() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label htmlFor="password" className="block text-lg font-medium">
                 Password
@@ -128,7 +119,6 @@ function Page() {
               />
             </div>
 
-            {/* Confirm Password */}
             <div>
               <label
                 htmlFor="confirmPassword"
@@ -146,7 +136,6 @@ function Page() {
               />
             </div>
 
-            {/* Gender */}
             <div>
               <label htmlFor="gender" className="block text-lg font-medium">
                 Gender
@@ -164,11 +153,9 @@ function Page() {
               </select>
             </div>
 
-            {/* Error / Success Messages */}
             {error && <p className="text-red-500 text-sm">{error}</p>}
             {message && <p className="text-green-500 text-sm">{message}</p>}
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition"

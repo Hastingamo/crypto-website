@@ -38,7 +38,6 @@ function Page() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/Login");
     } catch (error) {
       console.error("LogOut error: ", error);
     }
