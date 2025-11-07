@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import CoinChart from "../Component/chart";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 function Page() {
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
@@ -91,6 +92,7 @@ function Page() {
             <input  className="m-4 p-2 border-2 rounded" type="text" placeholder="Search Crypto"  value={search} onChange={(e) => setSearch(e.target.value)} />
             <button className="m-4 p-2 bg-blue-600 text-white rounded" onClick={news}>News</button>
             <button className="m-4 p-2 bg-green-600 text-white rounded" onClick={forex}>forex</button>
+            <Link href="Wallet"><button className="m-4 p-2 bg-green-600 text-white rounded">wallet</button></Link>
           </div>
           <div className="grid grid-cols-1 ">
             {filteredData.map((item, index) => (
@@ -100,13 +102,12 @@ function Page() {
                 transition={{ duration: 0.5 }}
                 whileHover={{ scale: 1.02 }}
                 key={index}
-                // onViewportEnter={}
-                // onViewportLeave={}
+               
                 viewport={{once:true}}
                 whileInView={{opacity: 1, y:0}}
-                className="m-4 p-6 border-2 bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7"
-              >
-                <Image src={item.image} alt={item.name} width={50} height={50} />
+                className="">
+                    <Link href={`/Product/${item.id}`} className="m-4 p-6 border-2 bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7">
+                     <Image src={item.image} alt={item.name} width={50} height={50} />
                 <p>
                   #{index + 1} {item.name} ({item.symbol.toUpperCase()} || {item.category})
                 </p>
@@ -122,8 +123,9 @@ function Page() {
                   1min Change: {item.price_change_percentage_24h.toFixed(2)}%
                 </p>
                                 <p>🔄 Volume: ${item.total_volume.toLocaleString()}</p>
-                  {/* <Image */}
-                  {/* <CoinChart coinId={item.id}   /> */}
+         
+                    </Link>
+               
               </motion.div>
             ))}
           </div>

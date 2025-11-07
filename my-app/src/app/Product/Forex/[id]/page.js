@@ -3,7 +3,7 @@ import React from 'react'
 function Page() {
   return (
     <div>
-        <h1> wallet </h1>
+      
     </div>
   )
 }
