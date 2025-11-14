@@ -6,7 +6,30 @@ import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../Component/Firebase";
+// import { GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 function Page() {
+  const provider = new GoogleAuthProvider();
+  const loginWithGoogle = async () =>{
+    try{
+      await signInWithPopup (auth, provider);
+      const user = auth.currentUser;
+      if(user){
+        const userDocRef = doc (db, "users", user.id);
+        const userDocSnapshot = await getDoc(userDocRef);
+        if(!userDocSnapshot.exists()){
+          await setDoc (userDocRef, {
+            userId: user.uid,
+            email: user.email
+          })
+
+        }
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
  const Router = useRouter();
@@ -102,6 +125,7 @@ function Page() {
               Login
             </button>
           </form>
+          <button onClick={loginWithGoogle}>Signup with google</button>
         </div>
         <div className="bg-signup flex items-center justify-center h-screen text-white">
           <h1 className="text-4xl font-bold">Welcome to CryptoSpace</h1>
