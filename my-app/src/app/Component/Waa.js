@@ -19,7 +19,7 @@ const config = createConfig(
     appName: "Your App Name",
 
     appDescription: "Your App Description",
-    appUrl: "https://family.co", 
+    appUrl: "https://crypto-website-sand-eight.vercel.app", 
     appIcon: "https://family.co/logo.png",
        enableFamily: false, 
  
