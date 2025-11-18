@@ -35,6 +35,22 @@ body {
 .bg-signups{
   background-image: none;
 }
+.home-bg{
+  background-image: url("/images/earth.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 300;
+  width: 300;
+}
+@media screen and (max-width: 500px) {
+  .home-bg{
+    width: 200; 
+    height: 200;
+  }
+}
+
+
 @media screen and (min-width: 600px) {
   .bg-signup {
     background-image: none;

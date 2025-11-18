@@ -1,39 +1,71 @@
-"use client";
-import { WagmiProvider, createConfig, http } from "wagmi";
-import { sepolia } from "wagmi/chains";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { ConnectKitProvider, getDefaultConfig } from "connectkit";      
+// "use client";
 
-const config = createConfig(
-  getDefaultConfig({
-    chains: [sepolia],
-    transports: {
-      [sepolia.id]: http(
-        `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`,
-      ),
-    },
+// import '@rainbow-me/rainbowkit/styles.css';
+// import {
+//   getDefaultConfig,
+//   RainbowKitProvider,
+//   darkTheme
+// } from '@rainbow-me/rainbowkit';
 
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+// import { WagmiProvider } from 'wagmi';
+// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { mainnet, sepolia } from 'wagmi/chains';
 
-    appName: "Your App Name",
+// const config = getDefaultConfig({
+//   appName: 'My Crypto App',
+//   projectId: "d7e4d0c7e25e01029dd7350f957b5b41", 
+//   chains: [mainnet, sepolia],
+// });
 
-    appDescription: "Your App Description",
-    appUrl: "https://crypto-website-sand-eight.vercel.app", 
-    appIcon: "https://family.co/logo.png",
-       enableFamily: false, 
- 
-  }),
-);
+// const queryClient = new QueryClient();
 
-const queryClient = new QueryClient();
+// export function Providers({ children }) {
+//   return (
+//     <WagmiProvider config={config}>
+//       <QueryClientProvider client={queryClient}>
+//         <RainbowKitProvider theme={darkTheme()}>
+//           {children}
+//         </RainbowKitProvider>
+//       </QueryClientProvider>
+//     </WagmiProvider>
+//   );
+// }
 
-export const Web3Provider = ({ children }) => {
-  return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider theme>{children}</ConnectKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  );
-};
+
+
+import { createAppKit } from '@reown/appkit/react'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+import { mainnet, arbitrum, polygon } from '@reown/appkit/networks'
+import { QueryClient } from '@tanstack/react-query'
+
+// Get projectId from https://cloud.reown.com
+const projectId = 'd7e4d0c7e25e01029dd7350f957b5b41'
+
+// Create wagmiAdapter
+const wagmiAdapter = new WagmiAdapter({
+  networks: [mainnet, arbitrum, polygon],
+  projectId,
+})
+
+// Configure metadata
+const metadata = {
+  name: 'Your App Name',
+  description: 'Your App Description',
+  url: 'https://yourapp.com',
+  icons: ['https://yourapp.com/icon.png']
+}
+
+// Create the AppKit
+createAppKit({
+  adapters: [wagmiAdapter],
+  projectId,
+  networks: [mainnet, arbitrum, polygon],
+  metadata,
+  features: {
+    analytics: true,
+  }
+})
+
+// Export for use in provider
+export const queryClient = new QueryClient()
+export const wagmiConfig = wagmiAdapter.wagmiConfig
