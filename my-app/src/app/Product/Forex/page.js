@@ -50,6 +50,10 @@ function Page() {
     router.push("/Product/Forex/News")
   }
 
+      const chart = () => {
+    router.push("/Product/Forex/Chart")
+  }
+
   return (
     <div className="p-6 bg-[#AFC9DC] dark:bg-[#352F44]">
       <h1 className="text-3xl font-bold mb-4">Forex Market</h1>
@@ -74,7 +78,7 @@ function Page() {
      </div>
       ) : (
         <>
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-3">
             <input
               className="mb-6 p-2 border-2 rounded w-full max-w-md"
               type="text"
@@ -87,6 +91,12 @@ function Page() {
               onClick={news}
             >
               News
+            </button>
+                        <button
+              className="m-4 p-2 bg-blue-600 text-white rounded"
+              onClick={chart}
+            >
+              Chart
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

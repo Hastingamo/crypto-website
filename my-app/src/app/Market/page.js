@@ -1,11 +1,15 @@
-import React from 'react'
+"use client";
+import React, { useState, useEffect } from "react";
+import Record from "../Component/Record";
+import Image from "next/image";
 
-function page() {
+function Page() {
+ 
   return (
-    <div>
-      <h1>Market Page</h1>
-    </div>
-  )
+  <>
+  <h1>market pag</h1>
+  </>
+  );
 }
 
-export default page
+export default Page;

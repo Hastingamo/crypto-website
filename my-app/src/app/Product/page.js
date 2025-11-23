@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import CoinChart from "../Component/chart";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 function Page() {
@@ -18,6 +17,9 @@ function Page() {
   const router = useRouter();
   const forex = () => {
     router.push('/Product/Forex');
+  };
+    const chart = () => {
+    router.push('/Product/CryptoChart');
   };
   
   // const stock = () => {
@@ -92,6 +94,8 @@ function Page() {
             <input  className="m-4 p-2 border-2 rounded" type="text" placeholder="Search Crypto"  value={search} onChange={(e) => setSearch(e.target.value)} />
             <button className="m-4 p-2 bg-blue-600 text-white rounded" onClick={news}>News</button>
             <button className="m-4 p-2 bg-green-600 text-white rounded" onClick={forex}>forex</button>
+                        <button className="m-4 p-2 bg-green-600 text-white rounded" onClick={chart}>chart</button>
+
             <Link href="Wallet"><button className="m-4 p-2 bg-green-600 text-white rounded">wallet</button></Link>
           </div>
           <div className="grid grid-cols-1 ">
@@ -115,12 +119,14 @@ function Page() {
                 <p>📈 Market Cap: ${item.market_cap.toLocaleString()}</p>
                 <p
                   className={`font-semibold ${
-                    item.price_change_percentage_24h > 0
+                    (item.price_change_percentage_24h ?? 0) > 0
                       ? "text-green-500"
                       : "text-red-500"
                   }`}
                 >
-                  1min Change: {item.price_change_percentage_24h.toFixed(2)}%
+                  1min Change: {typeof item.price_change_percentage_24h === "number"
+                    ? `${item.price_change_percentage_24h.toFixed(2)}%`
+                    : "N/A"}
                 </p>
                                 <p>🔄 Volume: ${item.total_volume.toLocaleString()}</p>
          
@@ -130,7 +136,7 @@ function Page() {
             ))}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-
+            
           </div>
         </>
       )}
