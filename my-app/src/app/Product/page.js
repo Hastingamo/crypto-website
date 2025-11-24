@@ -68,7 +68,7 @@ function Page() {
   }, []);
 
   return (
-    <div className="bg-[#AFC9DC] dark:bg-[#352F44]">
+    <div className="bg-[#AFC9DC] dark:bg-[#37353E]">
       <h1 className="ml-4">crypto Page</h1>
       {loading ? (
    <div className="flex justify-center items-center h-screen ">

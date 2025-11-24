@@ -55,7 +55,7 @@ function Page() {
   }
 
   return (
-    <div className="p-6 bg-[#AFC9DC] dark:bg-[#352F44]">
+    <div className="p-6 bg-[#AFC9DC] dark:bg-[#37353E]">
       <h1 className="text-3xl font-bold mb-4">Forex Market</h1>
 
       {loading ? (

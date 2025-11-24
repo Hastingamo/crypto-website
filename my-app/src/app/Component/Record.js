@@ -11,6 +11,11 @@ function Record() {
 
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
+   const [interval, setInterval] = useState("1D");
+
+  const changeInterval = (newInterval) => {
+    setInterval(newInterval);
+  };
 
   /* ---- Fetch coins ---- */
   useEffect(() => {
@@ -29,7 +34,6 @@ function Record() {
     fetchCoins();
   }, []);
 
-  /* ---- Load TradingView Script ---- */
   useEffect(() => {
     if (window.TradingView) {
       setIsScriptLoaded(true);
@@ -45,7 +49,6 @@ function Record() {
     return () => document.head.removeChild(script);
   }, []);
 
-  /* ---- Initialize Chart ---- */
   useEffect(() => {
     if (!isScriptLoaded || !chartContainerRef.current) return;
 
@@ -143,7 +146,13 @@ function Record() {
           </button>
         </div>
       </div>
-
+       <div className="flex gap-2">
+  <button onClick={() => changeInterval("1D")}>1D</button>
+  <button onClick={() => changeInterval("1h")}>1H</button>
+  <button onClick={() => changeInterval("30")}>30m</button>
+  <button onClick={() => changeInterval("15")}>15m</button>
+  <button onClick={() => changeInterval("5")}>5m</button>
+</div>
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-4">
         {coins.map((coin) => (
           <button
@@ -167,6 +176,7 @@ function Record() {
           id="tradingview-chart"
           className="absolute inset-0"
         />
+ 
       </div>
     </div>
   );
