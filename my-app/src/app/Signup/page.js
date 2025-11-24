@@ -156,7 +156,7 @@ function Page() {
               </select>
             </div>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-3xl">{error}</p>}
             {message && <p className="text-green-500 text-sm">{message}</p>}
 
             <button
