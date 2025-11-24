@@ -46,9 +46,9 @@ function Page() {
 
       setMessage(
         "Registration successful! Please check your email for verification.",
-            router.push("/Login")
-
       );
+                  router.push("/Login")
+
 
       setUserName("");
       setEmail("");
