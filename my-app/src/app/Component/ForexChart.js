@@ -16,12 +16,11 @@ function Record() {
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
 
-  /* ---- Fetch coins ---- */
   useEffect(() => {
     const fetchCoins = async () => {
       try {
         const res = await fetch(
-                    `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
+        `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
         );
         const data = await res.json();
         setCoins(data.slice(0, 7));
