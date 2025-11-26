@@ -38,6 +38,13 @@ function Page() {
       const user = userCredential.user;
 
       await sendEmailVerification(user);
+      sendEmailVerification(auth.user)
+  .then(() => console.log("Verification email sent"))
+  .catch(err => console.log("Error:", err));
+      if(!sendEmailVerification){
+        setError("Failed to send verification email.");
+        return;
+      }
 
       localStorage.setItem(
         "userData",
