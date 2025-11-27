@@ -36,11 +36,14 @@ function Page() {
         password
       );
       const user = userCredential.user;
+      await user.reload()
 
-      await sendEmailVerification(user);
-      sendEmailVerification(auth.user)
-  .then(() => console.log("Verification email sent"))
-  .catch(err => console.log("Error:", err));
+      await sendEmailVerification(user)
+
+  //     sendEmailVerification(auth.user)
+  // .then(() => console.log("Verification email sent"))
+  // .catch(err => console.log("Error:", err));
+
       if(!sendEmailVerification){
         setError("Failed to send verification email.");
         return;
@@ -54,6 +57,8 @@ function Page() {
       setMessage(
         "Registration successful! Please check your email for verification.",
       );
+            await new Promise(res => setTimeout(res, 500))
+
                   router.push("/Login")
 
 
