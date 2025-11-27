@@ -93,7 +93,6 @@ function Page() {
           <div>
             <input  className="m-4 p-2 border-2 rounded" type="text" placeholder="Search Crypto"  value={search} onChange={(e) => setSearch(e.target.value)} />
             <button className="m-4 p-2 bg-blue-600 text-white rounded" onClick={news}>News</button>
-            <button className="m-4 p-2 bg-green-600 text-white rounded" onClick={forex}>forex</button>
                         <button className="m-4 p-2 bg-green-600 text-white rounded" onClick={chart}>chart</button>
 
             <Link href="Wallet"><button className="m-4 p-2 bg-green-600 text-white rounded">wallet</button></Link>
