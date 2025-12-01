@@ -38,26 +38,26 @@ function Page() {
       const user = userCredential.user;
       await user.reload()
 
-      await sendEmailVerification(user)
+      // await sendEmailVerification(user)
 
   //     sendEmailVerification(auth.user)
   // .then(() => console.log("Verification email sent"))
   // .catch(err => console.log("Error:", err));
 
-      if(!sendEmailVerification){
-        setError("Failed to send verification email.");
-        return;
-      }
+      // if(!sendEmailVerification){
+      //   setError("Failed to send verification email.");
+      //   return;
+      // }
 
       localStorage.setItem(
         "userData",
         JSON.stringify({ userName, gender, email })
       );
 
-      setMessage(
-        "Registration successful! Please check your email for verification.",
-      );
-            await new Promise(res => setTimeout(res, 500))
+      // setMessage(
+      //   "Registration successful! Please check your email for verification.",
+      // );
+      //       await new Promise(res => setTimeout(res, 500))
 
                   router.push("/Login")
 

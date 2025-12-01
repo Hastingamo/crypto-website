@@ -55,7 +55,7 @@ function Page() {
   }
 
   return (
-    <div className="p-6 bg-[#AFC9DC] dark:bg-[#393E46]">
+    <div className="p-6 bg-[#AFC9DC] ">
       <h1 className="text-3xl font-bold mb-4">Forex Market</h1>
 
       {loading ? (
@@ -109,7 +109,7 @@ function Page() {
                   transition={{ duration: 0.5 }}
                   whileHover={{ scale: 1.02 }}
                   key={index}
-                  className="border rounded-lg bg-[#F2F4F6] dark:bg-[#00AD85] dark:text-[#DBD8E3] p-4 shadow-md hover:shadow-lg transition"
+                  className="border rounded-lg bg-[#F2F4F6]  p-4 shadow-md hover:shadow-lg transition"
                 >
                   <div className="flex items-center space-x-3">
                     <div className="text-3xl">

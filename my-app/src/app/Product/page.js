@@ -68,7 +68,7 @@ function Page() {
   }, []);
 
   return (
-    <div className="bg-[#AFC9DC] dark:bg-[#37353E]">
+    <div className="bg-[#AFC9DC] ">
       <h1 className="ml-4">crypto Page</h1>
       {loading ? (
    <div className="flex justify-center items-center h-screen ">
@@ -109,7 +109,7 @@ function Page() {
                 viewport={{once:true}}
                 whileInView={{opacity: 1, y:0}}
                 className="">
-                    <Link href={`/Product/${item.id}`} className="m-4 p-6 border-2 bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7">
+                    <Link href={`/Product/${item.id}`} className="m-4 p-6 border-2 bg-[#F2F4F6]  xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7">
                      <Image src={item.image} alt={item.name} width={50} height={50} />
                 <p>
                   #{index + 1} {item.name} ({item.symbol.toUpperCase()} || {item.category})

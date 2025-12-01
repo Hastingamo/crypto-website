@@ -61,9 +61,10 @@ function Page() {
              localStorage.removeItem("registrationData");
         }
         setMessage("Login successful!");
+        alert("login successful")
         Router.push("/Dashboard");
       } else {
-        setError("Please verify your email before logging in.");
+        // setError("Please verify your email before logging in.");
       }
     } catch (error) {
       if (error instanceof Error) {
