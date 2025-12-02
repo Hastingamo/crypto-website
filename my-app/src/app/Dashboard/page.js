@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { Router } from "next/router";
 import React, { useEffect, useState } from "react";
 import { auth } from "../Component/Firebase";
-import { Firestore, getDoc, setDoc } from "firebase/firestore";
-
+import { getDoc, setDoc } from "firebase/firestore";
+import { db } from "../Component/Firebase";
 import { doc } from "firebase/firestore";
 function Page() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ function Page() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
-        const userDoc = await getDoc(doc(Firestore, "users", user.uid));
+        const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data();
           setUserName(`${userData.userName}`);

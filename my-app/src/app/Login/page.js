@@ -22,6 +22,8 @@ function Page() {
           await setDoc(userDocRef, {
             userId: user.uid,
             email: user.email,
+            userName: user.displayName,
+            
           });
         }
       }

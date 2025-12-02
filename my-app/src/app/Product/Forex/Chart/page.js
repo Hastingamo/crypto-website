@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 // import Record from "../../Component/Record";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import ForexChart from "./ForexChart";
 function Page() {
-   const [coins, setCoins] = useState([]);
+  const [coins, setCoins] = useState([]);
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
 
   useEffect(() => {
@@ -37,17 +36,15 @@ function Page() {
     <div>
       <h1>chart Page</h1>
       <div className=" flex flex-row">
-        <div className=" w-full md:w-4/6 lg:w-3/4">
-        <ForexChart/>
-        </div>
+        <div className=" w-full md:w-4/6 lg:w-3/4"></div>
         <div className="md:w-1/3 lg:w-1/4 md:bg-[#D9CFC7] md:h-screen">
-          <h1>currency pairs </h1>
+          <h1>coins list</h1>
           <div className="grid grid-cols-3">
             <h1>name</h1>
             <h1>price</h1>
             <h1>24h%</h1>
           </div>
-          {/* <div className="hidden md:grid md:grid-cols-1">
+          <div className="hidden md:grid md:grid-cols-1">
             {/* {coins.map((coin) => (
               <div key={coin.id} className="p-4 border-b border-gray-300">
                 <div className="flex flex-row">
@@ -104,7 +101,7 @@ function Page() {
                 </motion.div>
               );
             })}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

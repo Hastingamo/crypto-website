@@ -17,6 +17,7 @@ function Record() {
     setInterval(newInterval);
   };
 
+  /* ---- Fetch coins ---- */
   useEffect(() => {
     const fetchCoins = async () => {
       try {
@@ -61,7 +62,7 @@ function Record() {
       autosize: true,
       symbol: currentSymbol,
       container_id: chartContainerRef.current.id,
-      interval: interval,
+      interval: "1D",
       timezone: "Etc/UTC",
       theme: "light",
       style: "1",
@@ -104,6 +105,7 @@ function Record() {
             ({currentSymbol})
           </h2>
         </div>
+
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <form
             onSubmit={handleSearchSubmit}
@@ -153,7 +155,7 @@ function Record() {
 </div>
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-4">
         {coins.map((coin) => (
-     <button
+          <button
             key={coin.id}
             onClick={() => setCurrentSymbol(coin.symbol + "/USD")}
             className={`px-3 py-1 rounded-full text-sm text-center truncate 
@@ -165,7 +167,6 @@ function Record() {
           >
             {coin.name}
           </button>
-          
         ))}
       </div>
 

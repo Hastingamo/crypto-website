@@ -22,20 +22,12 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID, 
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-  //   apiKey: "AIzaSyBjDp1IYPrjbcEPR8Ft3s_5lRKHlTDeg5Q",
-  // authDomain: "mycrypto-5796e.firebaseapp.com",
-  // projectId: "mycrypto-5796e",
-  // storageBucket: "mycrypto-5796e.firebasestorage.app",
-  // messagingSenderId: "319525460517",
-  // appId: "1:319525460517:web:863ffe091fb8af14eebdcc",
-  // measurementId: "G-NLXJKY7K4Q"
+
 };
 
-// Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Export what you need
 export { app, auth, db };

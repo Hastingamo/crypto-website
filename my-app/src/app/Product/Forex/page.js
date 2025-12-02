@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 function Page() {
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
@@ -46,36 +47,36 @@ function Page() {
   }, [search, data]);
 
   const router = useRouter();
-    const news = () => {
-    router.push("/Product/Forex/News")
-  }
+  const news = () => {
+    router.push("/Product/Forex/News");
+  };
 
-      const chart = () => {
-    router.push("/Product/Forex/Chart")
-  }
+  const chart = () => {
+    router.push("/Product/Forex/Chart");
+  };
 
   return (
     <div className="p-6 bg-[#AFC9DC] ">
       <h1 className="text-3xl font-bold mb-4">Forex Market</h1>
 
       {loading ? (
-  <div className="flex justify-center items-center h-screen ">
-       <motion.div
-         initial={{ opacity: 0, y: 20, scale: 0.9 }}
-         animate={{ opacity: 1, y: 0, scale: 1 }}
-         exit={{ opacity: 0, y: -20, scale: 0.9 }}
-         whileHover={{ scale: 1.05, rotate: 1 }}
-         transition={{
-           type: "spring",
-           stiffness: 120,
-           damping: 10,
-           duration: 0.4,
-         }}
-         className=""
-       >
-         <div className="h-12 w-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
-       </motion.div>
-     </div>
+        <div className="flex justify-center items-center h-screen ">
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.9 }}
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 10,
+              duration: 0.4,
+            }}
+            className=""
+          >
+            <div className="h-12 w-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
+          </motion.div>
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-3">
@@ -92,7 +93,7 @@ function Page() {
             >
               News
             </button>
-                        <button
+            <button
               className="m-4 p-2 bg-blue-600 text-white rounded"
               onClick={chart}
             >
@@ -116,11 +117,13 @@ function Page() {
                       {getFlag(base)} / {getFlag(quote)}
                     </div>
                     <div>
-                      <p className="font-semibold">{item.displaySymbol}</p>
+                      <Link href={`/Product/Forex/${item.id}`}>
+                        <p className="font-semibold">{item.displaySymbol}</p>
+                      </Link>
+
                       <p className="text-gray-600 text-sm">
                         {item.description}
                       </p>
-                      {/* <p className="text-sm text-gray-500">{item.symbol}</p> */}
                     </div>
                   </div>
                 </motion.div>
