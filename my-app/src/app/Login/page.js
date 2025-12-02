@@ -36,44 +36,91 @@ function Page() {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
-  const handeleFormSumbit = async (event) => {
-    event.preventDefault();
-    setError(null);
-    setMessage(null);
+  // const handleFormSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setError(null);
+  //   setMessage(null);
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      if (user.emailVerified) {
-        const registrationData = localStorage.getItem("registrationData");
-        const { email: storedEmail = "", password = "", userName = "" } = registrationData ? JSON.parse(registrationData) : {};
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (!userDoc.exists()) {
-          await setDoc(doc(db, "users", user.uid), {
-            password: password,
-            email: user.email || storedEmail,
-            userName : userName,
-          });
-             localStorage.removeItem("registrationData");
-        }
-        setMessage("Login successful!");
-        alert("login successful")
-        Router.push("/Dashboard");
-      } else {
-        // setError("Please verify your email before logging in.");
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("an unknown error occurred");
-      }
+  //   try {
+  //     const userCredential = await signInWithEmailAndPassword(
+  //       auth,
+  //       email,
+  //       password
+  //     );
+  //     const user = userCredential.user;
+  //     if (user.emailVerified) {
+  //       const registrationData = localStorage.getItem("registrationData");
+  //       const { email: storedEmail = "", password = "", userName = "" } = registrationData ? JSON.parse(registrationData) : {};
+  //       const userDoc = await getDoc(doc(db, "users", user.uid));
+  //       if (!userDoc.exists()) {
+  //         await setDoc(doc(db, "users", user.uid), {
+  //           password: password,
+  //           email: user.email || storedEmail,
+  //           userName : userName,
+  //         });
+  //            localStorage.removeItem("registrationData");
+  //       }
+  //       setMessage("Login successful!");
+  //       alert("login successful")
+  //       Router.push("/Dashboard");
+  //     } else {
+  //       // setError("Please verify your email before logging in.");
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       setError(error.message);
+  //     } else {
+  //       setError("an unknown error occurred");
+  //     }
+  //   }
+  // };
+
+  const handleFormSubmit = async (event) => {
+  event.preventDefault();
+  setError(null);
+  setMessage(null);
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+
+    const registrationData = localStorage.getItem("registrationData");
+    let storedEmail = "";
+    let storedPassword = "";
+    let storedUserName = "";
+
+    if (registrationData) {
+      const parsed = JSON.parse(registrationData);
+      storedEmail = parsed.email || "";
+      storedPassword = parsed.password || "";
+      storedUserName = parsed.userName || "";
     }
-  };
+
+    const userRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userRef);
+
+    if (!userDoc.exists()) {
+      await setDoc(userRef, {
+        email: user.email || storedEmail,
+        password: storedPassword,
+        userName: storedUserName,
+      });
+
+      localStorage.removeItem("registrationData");
+    }
+
+    setMessage("Login successful!");
+    alert("login successful");
+    Router.push("/Dashboard");
+
+  } catch (error) {
+    setError(error.message || "An unknown error occurred");
+  }
+};
 
   return (
     <div className="overflow-hidden">
@@ -86,7 +133,7 @@ function Page() {
           <p className="text-center ml-[4rem] mt-2 md:text-2xl w-[60%] md:w-[80%] md:ml-[2rem] xl:ml-[5rem]">
             the best place to see live chart or trade crypto is here
           </p>
-          <form onSubmit={handeleFormSumbit} className=" space-y-4  py-5">
+          <form onSubmit={handleFormSubmit} className=" space-y-4  py-5">
             <div>
               <label htmlFor="email" className="ml-[1rem] md:text-2xl ">
                 Email:
@@ -117,8 +164,8 @@ function Page() {
                 required
               />
             </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            {message && <p className="text-green-500 text-sm">{message}</p>}
+            {error && <p className="text-red-500 text-md">{error}</p>}
+            {message && <p className="text-green-500 text-md">{message}</p>}
             <button
               type="submit"
               className="bg-blue-500 text-white text-center justify-center items-center flex py-2 px-4 rounded"

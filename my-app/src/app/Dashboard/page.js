@@ -5,9 +5,8 @@ import { Router } from "next/router";
 import React, { useEffect, useState } from "react";
 import { auth } from "../Component/Firebase";
 import { Firestore, getDoc, setDoc } from "firebase/firestore";
-// import { email } from 'better-auth/*';
-// import { json } from 'stream/consumers';
 
+import { doc } from "firebase/firestore";
 function Page() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);

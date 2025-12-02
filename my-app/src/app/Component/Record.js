@@ -104,7 +104,6 @@ function Record() {
             ({currentSymbol})
           </h2>
         </div>
-        
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <form
             onSubmit={handleSearchSubmit}
