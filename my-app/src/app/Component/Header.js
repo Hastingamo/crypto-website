@@ -12,7 +12,7 @@ function Header() {
   // }
   return (
     <>
-      <div className="hidden md:grid md:grid-cols-6 md:p-4 bg-[#F2F4F6]">
+      <div className="hidden md:flex md:gap-10 md:flex-row md:p-4 bg-[#F2F4F6]">
         <Link href="/"><h1>Dams</h1></Link  >
         <MarketComp
           label="Product"

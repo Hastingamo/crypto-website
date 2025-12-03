@@ -3,7 +3,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import Record from "../../Component/Record";
 import Image from "next/image";
-function Page() {
+function LargeChar() {
      const [coins, setCoins] = useState([]);
 
    useEffect(() => {
@@ -25,7 +25,7 @@ function Page() {
   return (
   <div>
       <h1>chart Page</h1>
-      <div className="hidden md:flex md:flex-row">
+      <div className=" flex flex-row">
         <div className=" w-full md:w-4/6 lg:w-3/4">
           <Record />
         </div>
@@ -69,11 +69,8 @@ function Page() {
 
         </div>
       </div>
-      <div>
-          <h1>pls rotate your phone to size </h1>
-      </div>
     </div>
   )
 }
 
-export default Page;
+export default LargeChar;

@@ -37,6 +37,7 @@ function Page() {
   const Router = useRouter();
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // const handleFormSubmit = async (event) => {
   //   event.preventDefault();
@@ -81,6 +82,7 @@ function Page() {
   event.preventDefault();
   setError(null);
   setMessage(null);
+  setLoading(true);
 
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -114,7 +116,7 @@ function Page() {
 
       localStorage.removeItem("registrationData");
     }
-
+    setLoading(false)
     setMessage("Login successful!");
     alert("login successful");
     Router.push("/Dashboard");
@@ -123,6 +125,12 @@ function Page() {
     setError(error.message || "An unknown error occurred");
   }
 };
+
+if(loading){
+  return(
+    <h1>.................................</h1>
+)
+}
 
   return (
     <div className="overflow-hidden">

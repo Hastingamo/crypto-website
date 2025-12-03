@@ -39,7 +39,7 @@ function Page() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/Login");
+      router.push("/");
     } catch (error) {
       console.error("logout error", error);
     }
@@ -47,6 +47,7 @@ function Page() {
   const handleChangePassword = () => {
     router.push("/ChangePassword");
   };
+
   if (loading) {
     <p>loading.........</p>;
   }

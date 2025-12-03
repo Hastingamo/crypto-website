@@ -17,11 +17,13 @@ function Page() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setError(null);
     setMessage(null);
+    setLoading(true);
 
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
@@ -38,27 +40,16 @@ function Page() {
       const user = userCredential.user;
       await user.reload()
 
-      // await sendEmailVerification(user)
 
-  //     sendEmailVerification(auth.user)
-  // .then(() => console.log("Verification email sent"))
-  // .catch(err => console.log("Error:", err));
-
-      // if(!sendEmailVerification){
-      //   setError("Failed to send verification email.");
-      //   return;
-      // }
 
       localStorage.setItem(
         "userData",
         JSON.stringify({ userName, gender, email })
       );
 
-      // setMessage(
-      //   "Registration successful! Please check your email for verification.",
-      // );
-      //       await new Promise(res => setTimeout(res, 500))
+  
 
+      setLoading(false);
                   router.push("/Login")
 
 
@@ -73,6 +64,11 @@ function Page() {
     }
   };
 
+  if(loading){
+    return(
+      <h1>......................................................</h1>
+    )
+  }
   return (
     <div className="">
       <h1 className="text-center text-3xl font-bold mt-6 mb-5">Signup Page</h1>
