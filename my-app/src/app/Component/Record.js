@@ -13,9 +13,16 @@ function Record() {
   const widgetRef = useRef(null);
    const [interval, setInterval] = useState("1D");
 
-  const changeInterval = (newInterval) => {
-    setInterval(newInterval);
-  };
+const changeInterval = (newInterval) => {
+  setInterval(newInterval);
+
+  if (widgetRef.current ) {
+    widgetRef.current.onChartReady(() => {
+      widgetRef.current.chart().setResolution(newInterval);
+    });
+  }
+};
+
 
   /* ---- Fetch coins ---- */
   useEffect(() => {
@@ -62,7 +69,7 @@ function Record() {
       autosize: true,
       symbol: currentSymbol,
       container_id: chartContainerRef.current.id,
-      interval: "1D",
+      interval: interval,
       timezone: "Etc/UTC",
       theme: "light",
       style: "1",
@@ -70,7 +77,7 @@ function Record() {
       toolbar_bg: "#f1f3f6",
       enable_publishing: false,
     });
-  }, [isScriptLoaded, currentSymbol]);
+  }, [isScriptLoaded, currentSymbol, interval]);
 
   const toggleFullscreen = () => setIsFullScreen(!isFullScreen);
 
