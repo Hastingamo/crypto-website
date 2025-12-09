@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Loader from "../Forex/loa";
 function Page() {
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,23 +37,10 @@ function Page() {
     <div>
       <h1>Crypto News</h1>
       {loading ? (
-        <div className="flex justify-center items-center h-screen ">
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            whileHover={{ scale: 1.05, rotate: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 120,
-              damping: 10,
-              duration: 0.4,
-            }}
-            className=""
-          >
-            <div className="h-12 w-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
-          </motion.div>
-        </div>
+           <div className="top-1/2 left-1/2 absolute -translate-x-1/2 -translate-y-1/2">
+          <Loader/>
+       
+           </div>
       ) : (
         <>
           <div>
@@ -70,22 +58,7 @@ function Page() {
                 key={index}
                 className="m-4 p-4 border-2 rounded-lg bg-white dark:bg-gray-800"
               >
-                {/* {newsItem.image ? (
-  <Image
-    src={newsItem.image}
-    alt={newsItem.headline}
-    width={400}
-    height={200}
-    unoptimized
-    className="rounded-lg object-cover w-full h-48"
-  />
-) : (
-  <Image
-    src="https://via.placeholder.com/400x200?text=No+Image"
-    alt="No image available"
-    className="rounded-lg object-cover w-full h-48"
-  />
-)} */}
+                
                 <Image
                   src={newsItem.image}
                   alt={newsItem.headline}

@@ -3,8 +3,33 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import Record from "../../Component/Record";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
+
 function Page() {
+  const router = useRouter();
      const [coins, setCoins] = useState([]);
+    //  const [isAuthenticated, setIsAuthenticated] = useState(false)
+    //  const [Loading, setLoading] = useState(true);
+//   useEffect(() =>{
+//  const handleAuth = async () =>{
+//     try{
+//       const isAuthenticated = isSession
+//       if(!isAuthenticated){
+//         router.push("/Dashboard");
+//       }
+//       setIsAuthenticated(true);
+
+//     }catch (error) {
+//       router.push("/Dashboard");
+//     }finally{
+//       setLoading(false);
+//     }
+    
+//  }  
+//  handleAuth()  
+
+//   }, [router])
+
 
    useEffect(() => {
       const fetchCoins = async () => {
@@ -22,6 +47,12 @@ function Page() {
   
       fetchCoins();
     }, []);
+
+  //     if(Loading){
+  //   return(
+  //   <h1>..........................................</h1>   
+  //   )
+  // }
   return (
   <div>
       <h1>chart Page</h1>
@@ -69,7 +100,7 @@ function Page() {
 
         </div>
       </div>
-      <div>
+      <div className='flex flex-col md:hidden'>
           <h1>pls rotate your phone to size </h1>
       </div>
     </div>

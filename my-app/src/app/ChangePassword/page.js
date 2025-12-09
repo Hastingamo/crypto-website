@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { set } from "zod/mini";
 import { auth } from "../Component/Firebase";
+import Button from "../Component/Change";
 function Page() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -56,7 +57,7 @@ function Page() {
     <div className=" bg-signups">
       <h1 className="mt-5"> change Password</h1>
       <div className=" w-full h-screen flex bg-signup  justify-center items-center ">
-        <div className="shadow-2xl top-1/2 -translate-y-[40%] bg-white  xl:-translate-y-[20%] xl:top-[60%] border-2 p-2 md:p-4 lg:p-6 border-black rounded-2xl mt-16 w-3/4 md:w-8/12 xl:w-1/2 h-fit ">
+        <div className="shadow-2xl top-1/2 -translate-y-[30%] bg-white  xl:-translate-y-[10%] xl:top-[60%] border-2 p-2 md:p-4 lg:p-6 border-black rounded-2xl mt-16 w-3/4 md:w-8/12 xl:w-1/2 h-fit ">
           <form onSubmit={handleChangePassword} className=" space-y-4  py-5">
             <div>
               <label htmlFor="current Password" className="ml-[1rem] text-[20px] md:text-2xl ">
@@ -108,9 +109,9 @@ function Page() {
             {message && <p className="text-green-500 text-md">{message}</p>}
             <button
               type="submit"
-              className="bg-blue-500 mt-14 text-white text-center justify-center items-center flex py-2 px-4 rounded"
+              className="mt-14"
             >
-              change
+              <Button/>
             </button>
           </form>
         </div>

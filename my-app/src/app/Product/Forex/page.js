@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Loader from "./loa";
 function Page() {
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
@@ -60,23 +61,10 @@ function Page() {
       <h1 className="text-3xl font-bold mb-4">Forex Market</h1>
 
       {loading ? (
-        <div className="flex justify-center items-center h-screen ">
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            whileHover={{ scale: 1.05, rotate: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 120,
-              damping: 10,
-              duration: 0.4,
-            }}
-            className=""
-          >
-            <div className="h-12 w-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
-          </motion.div>
-        </div>
+           <div className="top-1/2 left-1/2 absolute -translate-x-1/2 -translate-y-1/2">
+          <Loader/>
+       
+           </div>
       ) : (
         <>
           <div className="grid grid-cols-3">

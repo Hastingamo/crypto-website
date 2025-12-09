@@ -69,7 +69,7 @@ const changeInterval = (newInterval) => {
       autosize: true,
       symbol: currentSymbol,
       container_id: chartContainerRef.current.id,
-      interval: interval,
+      interval: "hr",
       timezone: "Etc/UTC",
       theme: "light",
       style: "1",

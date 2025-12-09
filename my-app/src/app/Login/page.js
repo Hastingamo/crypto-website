@@ -8,29 +8,55 @@ import { getDoc, setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../Component/Firebase";
 // import { GoogleAuthProvider } from "firebase/auth";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import Loader from "../Component/Loading";
+import Button from "../Component/sumbit";
 
 function Page() {
   const provider = new GoogleAuthProvider();
-  const loginWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-      const user = auth.currentUser;
-      if (user) {
-        const userDocRef = doc(db, "users", user.uid);
-        const userDocSnapshot = await getDoc(userDocRef);
-        if (!userDocSnapshot.exists()) {
-          await setDoc(userDocRef, {
-            userId: user.uid,
-            email: user.email,
-            userName: user.displayName,
+  // const loginWithGoogle = async () => {
+  //   try {
+  //     await signInWithPopup(auth, provider);
+  //     const user = auth.currentUser;
+  //     if (user) {
+  //       const userDocRef = doc(db, "users", user.uid);
+  //       const userDocSnapshot = await getDoc(userDocRef);
+  //       if (!userDocSnapshot.exists()) {
+  //         await setDoc(userDocRef, {
+  //           userId: user.uid,
+  //           email: user.email,
+  //           userName: user.displayName,
             
-          });
-        }
-      }
-    } catch (err) {
-      console.log(err);
+  //         });
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  const loginWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user; 
+
+    if (!user) return;
+
+    const userDocRef = doc(db, "users", user.uid);
+    const userDocSnapshot = await getDoc(userDocRef);
+
+    if (!userDocSnapshot.exists()) {
+      await setDoc(userDocRef, {
+        userId: user.uid,
+        email: user.email || "",
+        userName: user.displayName || "",
+      });
     }
-  };
+
+    console.log("Google login successful!");
+
+  } catch (err) {
+    console.log("Google Login Error:", err.message);
+  }
+};
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +65,7 @@ function Page() {
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // const handleFormSubmit = async (event) => {
+
   //   event.preventDefault();
   //   setError(null);
   //   setMessage(null);
@@ -122,13 +148,17 @@ function Page() {
     Router.push("/Dashboard");
 
   } catch (error) {
+    setLoading(false);
     setError(error.message || "An unknown error occurred");
   }
 };
 
 if(loading){
   return(
-    <h1>.................................</h1>
+    <div className="top-1/2 left-1/2 absolute -translate-x-1/2 -translate-y-1/2">
+   <Loader/>
+
+    </div>
 )
 }
 
@@ -178,9 +208,10 @@ if(loading){
             {message && <p className="text-green-500 text-md">{message}</p>}
             <button
               type="submit"
-              className="bg-blue-500 text-white text-center justify-center items-center flex py-2 px-4 rounded"
+              className="mt-20"
             >
-              Login
+              
+            <Button/>
             </button>
           </form>
           <button onClick={loginWithGoogle}>Signup with google</button>

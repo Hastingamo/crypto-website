@@ -59,6 +59,7 @@ function Page() {
       setPassword("");
       setConfirmPassword("");
     } catch (err) {
+      setLoading(false);
       console.log("FIREBASE ERROR:", err);
       setError(err.message || "An unknown error occurred.");
     }
