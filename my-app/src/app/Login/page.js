@@ -13,26 +13,7 @@ import Button from "../Component/sumbit";
 
 function Page() {
   const provider = new GoogleAuthProvider();
-  // const loginWithGoogle = async () => {
-  //   try {
-  //     await signInWithPopup(auth, provider);
-  //     const user = auth.currentUser;
-  //     if (user) {
-  //       const userDocRef = doc(db, "users", user.uid);
-  //       const userDocSnapshot = await getDoc(userDocRef);
-  //       if (!userDocSnapshot.exists()) {
-  //         await setDoc(userDocRef, {
-  //           userId: user.uid,
-  //           email: user.email,
-  //           userName: user.displayName,
-            
-  //         });
-  //       }
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+
   const loginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
