@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import Loader from "../Forex/loa";
 function Page() {
   const [newsData, setNewsData] = useState([]);
