@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 // import Record from "../../Component/Record";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import ForexChart from "./ForexChart";
 function Page() {
   const [coins, setCoins] = useState([]);
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
@@ -36,7 +37,9 @@ function Page() {
     <div>
       <h1>chart Page</h1>
       <div className=" flex flex-row">
-        <div className=" w-full md:w-4/6 lg:w-3/4"></div>
+        <div className=" w-full md:w-4/6 lg:w-3/4">
+        <ForexChart/>
+        </div>
         <div className="md:w-1/3 lg:w-1/4 md:bg-[#D9CFC7] md:h-screen">
           <h1>coins list</h1>
           <div className="grid grid-cols-3">

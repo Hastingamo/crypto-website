@@ -5,7 +5,7 @@ function page() {
   return (
     <div>
       <h1>Product Id Page</h1>
-      <Link href="/app/Product/Note">
+      <Link href="/Product/Note">
         <h1>create note </h1>
       </Link>
     </div>

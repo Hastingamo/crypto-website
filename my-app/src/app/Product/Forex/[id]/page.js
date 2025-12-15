@@ -6,7 +6,7 @@ import React from 'react'
 function Page() {
   const Router = useRouter();
   const Navigate=()=>{
-    Router.push('/app/Product/Forex/Notess')
+    Router.push('/Product/Forex/Notess')
   }
   return (
     <div>

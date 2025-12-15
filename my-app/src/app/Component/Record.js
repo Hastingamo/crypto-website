@@ -8,23 +8,24 @@ function Record() {
   const [search, setSearch] = useState("");
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [coins, setCoins] = useState([]);
+  const [error, setError] = useState(null);
+  const [filtered, setFilteredData] = useState("");
+  const [show, setShow] = useState(false);
 
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
-   const [interval, setInterval] = useState("1D");
+  const [interval, setInterval] = useState("1D");
 
-const changeInterval = (newInterval) => {
-  setInterval(newInterval);
+  const changeInterval = (newInterval) => {
+    setInterval(newInterval);
 
-  if (widgetRef.current ) {
-    widgetRef.current.onChartReady(() => {
-      widgetRef.current.chart().setResolution(newInterval);
-    });
-  }
-};
+    if (widgetRef.current) {
+      widgetRef.current.onChartReady(() => {
+        widgetRef.current.chart().setResolution(newInterval);
+      });
+    }
+  };
 
-
-  /* ---- Fetch coins ---- */
   useEffect(() => {
     const fetchCoins = async () => {
       try {
@@ -69,7 +70,7 @@ const changeInterval = (newInterval) => {
       autosize: true,
       symbol: currentSymbol,
       container_id: chartContainerRef.current.id,
-      interval: "hr",
+      interval: "1",
       timezone: "Etc/UTC",
       theme: "light",
       style: "1",
@@ -83,15 +84,37 @@ const changeInterval = (newInterval) => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (search.trim()) {
-      const symbol = search.toUpperCase().endsWith("USD")
-        ? search.toUpperCase()
-        : search.toUpperCase() + "/USD";
+    setError("");
 
-      setCurrentSymbol(symbol);
-      setSearch("");
+    if (search.trim()) {
+      const input = search.trim().toLowerCase();
+
+      const coin = coins.find(
+        (c) =>
+          c.symbol.toLowerCase() === input || c.name.toLowerCase() === input
+      );
+
+      if (coin) {
+        setCurrentSymbol(input);
+        setSearch("");
+      } else {
+        setError("Coin does not exist");
+      }
     }
   };
+
+  const type = (e) => {
+    setSearch(e.target.value);
+    setShow(true);
+  };
+  useEffect(() => {
+    const filtered = coins.filter(
+      (item) =>
+        item.name.toLowerCase().includes(search.toLowerCase()) ||
+        item.symbol.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [search, coins]);
 
   const symbolOnly = currentSymbol.split("/")[0];
   const selectedCoin = coins.find(
@@ -107,10 +130,9 @@ const changeInterval = (newInterval) => {
         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
           <p className="text-lg text-gray-100 font-semibold">
             {selectedCoin ? selectedCoin.name : "Loading..."}
+            {error && <span className="text-red-500">{error}</span>}
           </p>
-          <h2 className="text-sm font-bold text-gray-800">
-            ({currentSymbol})
-          </h2>
+          <h2 className="text-sm font-bold text-gray-800">({currentSymbol})</h2>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
@@ -124,9 +146,25 @@ const changeInterval = (newInterval) => {
                 type="text"
                 placeholder="Enter crypto symbol"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={type}
                 className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-sm"
               />
+              {show && (
+                <div className="  absolute md:w-[30rem] md:h-[10rem] bg-white">
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+                  <div>
+                    {filtered.map((item, index) => (
+                      <div key={index}>
+                        <p             onClick={() => setCurrentSymbol(`BINANCE:${item.symbol.toUpperCase()}USDT`)}
+>
+                          #{index + 1} {item.name} ({item.symbol.toUpperCase()}{" "}
+                          || {item.category})
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             <button
@@ -153,18 +191,20 @@ const changeInterval = (newInterval) => {
           </button>
         </div>
       </div>
-       <div className="flex gap-2">
-  <button onClick={() => changeInterval("1D")}>1D</button>
-  <button onClick={() => changeInterval("1h")}>1H</button>
-  <button onClick={() => changeInterval("30")}>30m</button>
-  <button onClick={() => changeInterval("15")}>15m</button>
-  <button onClick={() => changeInterval("5")}>5m</button>
-</div>
+      <div className="flex gap-2">
+        <button onClick={() => changeInterval("1D")}>1D</button>
+        <button onClick={() => changeInterval("1h")}>1H</button>
+        <button onClick={() => changeInterval("30")}>30m</button>
+        <button onClick={() => changeInterval("15")}>15m</button>
+        <button onClick={() => changeInterval("5")}>5m</button>
+      </div>
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-4">
         {coins.map((coin) => (
           <button
             key={coin.id}
-            onClick={() => setCurrentSymbol(coin.symbol + "/USD")}
+            // onClick={() => setCurrentSymbol(coin.symbol + "/USD")}
+            onClick={() => setCurrentSymbol(`BINANCE:${coin.symbol.toUpperCase()}USDT`)}
+
             className={`px-3 py-1 rounded-full text-sm text-center truncate 
             ${
               currentSymbol.includes(coin.symbol.toUpperCase())
@@ -183,7 +223,6 @@ const changeInterval = (newInterval) => {
           id="tradingview-chart"
           className="absolute inset-0"
         />
- 
       </div>
     </div>
   );
