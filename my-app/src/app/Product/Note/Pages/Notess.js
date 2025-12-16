@@ -1,6 +1,7 @@
 
 
 // import { useLocation } from "react-router";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 // import OpenModals from "./OpenModals";
 function Notess() {
@@ -231,7 +232,7 @@ function Notess() {
               )
             ) : (
               <div className="relative inline-block">
-                <img
+                <Image
                   src={el.src}
                   alt="added"
                   style={{ width: el.width, height: el.height }}
