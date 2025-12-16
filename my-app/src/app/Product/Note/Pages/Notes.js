@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-// import OpenModal from "./OpenModal";
+import OpenModal from "./OpenModal";
+import Image from "next/image";
 function Notes() {
   const [template, setTemplate] = useState(null);
   const [elements, setElements] = useState([]); // will store texts + images
@@ -134,11 +135,13 @@ function Notes() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-black relative">
       <div className="grid grid-cols-4 fixed top-2 left-4 z-10 gap-2">
-        <img
-          src="Images/back.png"
+        <Image
+          src="images/back.png"
           alt="back"
-          className="w-6 h-6 mt-2 cursor-pointer"
+          className="mt-2 cursor-pointer"
           onClick={handleBackClick}
+          width={24}
+          height={24}
         />
         <input
           type="text"
@@ -154,7 +157,7 @@ function Notes() {
 
         <div className="fixed left-[90%]">
           {/* <OpenModal saveNote={save} /> */}
-          {/* <OpenModal/> */}
+          <OpenModal/>
         </div>
       </div>
 
@@ -216,7 +219,7 @@ function Notes() {
               )
             ) : (
               <div className="relative inline-block">
-                <img
+                <Image
                   src={el.src}
                   alt="added"
                   style={{ width: el.width, height: el.height }}

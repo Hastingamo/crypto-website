@@ -37,6 +37,7 @@ function Page() {
 
                   animate={{ opacity: 1, x: 50, scale: 1 }}
                   
+                  
           transition={{ duration: 6 }}
          className="grid grid-cols-3  gap-4">
           {coin.map((item) => (
