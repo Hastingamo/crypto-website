@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 function Page() {
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");

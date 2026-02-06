@@ -120,6 +120,12 @@ function Record() {
   const selectedCoin = coins.find(
     (coin) => coin.symbol.toUpperCase() === symbolOnly.toUpperCase()
   );
+  useEffect(() => {
+  const close = () => setShow(false);
+  window.addEventListener("click", close);
+  return () => window.removeEventListener("click", close);
+}, []);
+
 
   return (
     <div
@@ -150,7 +156,9 @@ function Record() {
                 className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-sm"
               />
               {show && (
-                <div className="  absolute md:w-[30rem] md:h-[10rem] bg-white">
+                <div className="   absolute top-full left-0 mt-2 w-[20rem] md:w-[20rem] 
+                  max-h-[12rem] overflow-y-auto pl-4 pt-4 pb-4
+                  bg-white shadow-xl rounded-lg z-[9999] border">
             {error && <p className="text-red-500 text-sm">{error}</p>}
                   <div>
                     {filtered.map((item, index) => (

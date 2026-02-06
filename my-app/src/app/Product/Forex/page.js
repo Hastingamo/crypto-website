@@ -5,31 +5,44 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Loader from "./loa";
 function Page() {
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+  const apikey = process.env.NEXT_PUBLIC_COINGECKO_API_KEY;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
-    getForex();
+      forex();
   }, []);
 
-  const getForex = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(
-        `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
-      );
-      const result = await res.json();
+  // const getForex = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await fetch(
+  //       `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
+  //     );
+  //     const result = await res.json();
 
-      const limited = result.slice(0, 100);
-      setData(limited);
-    } catch (err) {
-      console.error("Error fetching forex data:", err);
-    } finally {
-      setLoading(false);
-    }
+  //     setData(results);
+  //   } catch (err) {
+  //     console.error("Error fetching forex data:", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  
+  const forex = () => {
+
+        fetch(
+        `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // setData(data.slice(0, 30));
+        setData(data);
+        setLoading(false);
+      });
   };
 
   const getFlag = (currency) => {
@@ -41,9 +54,11 @@ function Page() {
   };
 
   useEffect(() => {
-    const filteredResults = data.filter((item) =>
-      item.displaySymbol.toLowerCase().includes(search.toLowerCase())
-    );
+    const filteredResults = data && Array.isArray(data)
+      ? data.filter((item) =>
+          item.displaySymbol.toLowerCase().includes(search.toLowerCase())
+        )
+      : [];
     setFiltered(filteredResults);
   }, [search, data]);
 
@@ -61,10 +76,9 @@ function Page() {
       <h1 className="text-3xl font-bold mb-4">Forex Market</h1>
 
       {loading ? (
-           <div className="top-1/2 left-1/2 absolute -translate-x-1/2 -translate-y-1/2">
-          <Loader/>
-       
-           </div>
+        <div className="top-1/2 left-1/2 absolute -translate-x-1/2 -translate-y-1/2">
+          <Loader />
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-3">

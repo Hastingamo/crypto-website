@@ -1,7 +1,9 @@
 "use client";
+
 import { Search, Minimize2, Maximize2 } from "lucide-react";
 
 import React, { useState, useEffect, useRef } from "react";
+import ForexSearch from "./ForexSearch";
 
 function ForexChart() {
   const [currentSymbol, setCurrentSymbol] = useState("OANDA:XAUCAD");
@@ -11,7 +13,7 @@ function ForexChart() {
   const [pairs, setPairs] = useState([]);
   const [show, setShow] = useState(false);
   const [error, setError] = useState(null);
-  const [filtered, setFilteredData] = useState("");
+  const [filtered, setFilteredData] = useState([]);
 
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
 
@@ -22,7 +24,7 @@ function ForexChart() {
     const fetchPairs = async () => {
       try {
         const res = await fetch(
-          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
+          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
         );
         const data = await res.json();
         setPairs(data.slice(0, 7));
@@ -78,7 +80,7 @@ function ForexChart() {
 
       const coin = pairs.find(
         (c) =>
-          c.symbol.toLowerCase() === input || c.name.toLowerCase() === input
+          c.symbol.toLowerCase() === input || c.name.toLowerCase() === input,
       );
 
       if (coin) {
@@ -95,7 +97,7 @@ function ForexChart() {
       (item) =>
         item.symbol.toLowerCase().includes(search.toLowerCase()) ||
         item.displaySymbol?.toLowerCase().includes(search.toLowerCase()) ||
-        item.description?.toLowerCase().includes(search.toLowerCase())
+        item.description?.toLowerCase().includes(search.toLowerCase()),
     );
     setFilteredData(filtered);
   }, [search, pairs]);
@@ -104,12 +106,17 @@ function ForexChart() {
     setSearch(e.target.value);
   };
 
-  const type = (e) => {
+  const onType = (e) => {
     setSearch(e.target.value);
     setShow(true);
   };
 
   const selectedPair = pairs.find((p) => p.symbol === currentSymbol);
+  useEffect(() => {
+    const close = () => setShow(false);
+    window.addEventListener("click", close);
+    return () => window.removeEventListener("click", close);
+  }, []);
 
   return (
     <div
@@ -135,12 +142,17 @@ function ForexChart() {
                 type="text"
                 placeholder="Enter crypto symbol"
                 value={search}
-                onChange={type}
+                onChange={onType}
                 className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-sm"
               />
-              {show && (
-                <div className="  absolute md:w-[30rem] md:h-[10rem] bg-white">
+              {show && search && (
+                <div
+                  className=" absolute top-full left-0 mt-2 w-[20rem] md:w-[20rem] 
+                  max-h-[12rem] overflow-y-auto pl-4 pt-4 pb-4
+                  bg-white shadow-xl rounded-lg z-[9999] border"
+                >
                   {error && <p className="text-red-500 text-sm">{error}</p>}
+
                   <div>
                     {filtered.map((item, index) => (
                       <div key={index}>
@@ -168,7 +180,7 @@ function ForexChart() {
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm"
             >
-              Search
+              search
             </button>
           </form>
 
@@ -196,6 +208,7 @@ function ForexChart() {
             onClick={() => setCurrentSymbol(pair.symbol)}
             className={`px-3 py-1 rounded-full text-sm text-center truncate ${
               currentSymbol === pair.symbol
+              
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
