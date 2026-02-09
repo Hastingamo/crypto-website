@@ -2,7 +2,7 @@
 import { Search, Minimize2, Maximize2 } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 
-function Record() {
+function Recordss() {
   const [currentSymbol, setCurrentSymbol] = useState("btc/usd");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [search, setSearch] = useState("");
@@ -144,7 +144,7 @@ function Record() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <form
+          {/* <form
             onSubmit={handleSearchSubmit}
             className="flex items-center gap-2 w-full sm:w-auto"
           >
@@ -183,7 +183,7 @@ function Record() {
             >
               Search
             </button>
-          </form>
+          </form> */}
 
           <button
             onClick={toggleFullscreen}
@@ -201,14 +201,14 @@ function Record() {
           </button>
         </div>
       </div>
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <button onClick={() => changeInterval("1D")}>1D</button>
         <button onClick={() => changeInterval("1h")}>1H</button>
         <button onClick={() => changeInterval("30")}>30m</button>
         <button onClick={() => changeInterval("15")}>15m</button>
         <button onClick={() => changeInterval("5")}>5m</button>
-      </div>
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-4">
+      </div> */}
+      {/* <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-4">
         {coinss.map((coin) => (
           <button
             key={coin.id}
@@ -225,7 +225,7 @@ currentSymbol === `BINANCE:${coin.symbol.toUpperCase()}USDT`
             {coin.name}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <div className="mt-4 w-full h-[60vh] lg:h-[75vh] relative bg-white rounded-md overflow-hidden">
         <div
@@ -238,4 +238,4 @@ currentSymbol === `BINANCE:${coin.symbol.toUpperCase()}USDT`
   );
 }
 
-export default Record;
+export default Recordss;

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Loader from "./loa";
 function Page() {
+  // const apikeys = "MYBRGA85QP1HBBAL";
   const apikey = process.env.NEXT_PUBLIC_COINGECKO_API_KEY;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,9 +42,12 @@ function Page() {
       .then((data) => {
         // setData(data.slice(0, 30));
         setData(data);
+        console.log(data);
         setLoading(false);
       });
   };
+
+
 
   const getFlag = (currency) => {
     if (!currency) return "🏳️";
@@ -119,8 +123,8 @@ function Page() {
                       {getFlag(base)} / {getFlag(quote)}
                     </div>
                     <div>
-                      <Link href={`/Product/Forex/${item.id}`}>
-                        <p className="font-semibold">{item.displaySymbol}</p>
+                      <Link href={`/Product/Forex/${item.description}`}>
+                        <p className="font-semibold">{item.symbol}</p>
                       </Link>
 
                       <p className="text-gray-600 text-sm">

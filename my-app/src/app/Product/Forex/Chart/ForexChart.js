@@ -11,6 +11,7 @@ function ForexChart() {
   const [search, setSearch] = useState("");
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [pairs, setPairs] = useState([]);
+  const [pairss, setPairss] = useState([]);
   const [show, setShow] = useState(false);
   const [error, setError] = useState(null);
   const [filtered, setFilteredData] = useState([]);
@@ -20,21 +21,49 @@ function ForexChart() {
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
 
-  useEffect(() => {
-    const fetchPairs = async () => {
-      try {
-        const res = await fetch(
-          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
-        );
-        const data = await res.json();
-        setPairs(data.slice(0, 7));
-      } catch (err) {
-        console.error("Error fetching forex pairs:", err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchPairs = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
+  //       );
+  //       const data = await res.json();
+  //       setPairs(data.slice(0, 100));
+  //       setPairss(data.slice(0, 7));
+  //     } catch (err) {
+  //       console.error("Error fetching forex pairs:", err);
+  //     }
+  //   };
 
-    fetchPairs();
-  }, []);
+  //   fetchPairs();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchPairs = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
+  //       );
+  //       const data = await res.json();
+  //       const checked = [];
+  //       for (const pair of data) {
+  //         const symbol = pair.symbol.includes(":")
+  //           ? pair.symbol
+  //           : `OANDA:${pair.symbol}`;
+  //         const isValid = await validateSymbol(symbol);
+  //         if (isValid) {
+  //           checked.push({ ...pair, symbol });
+  //         }
+  //         if (checked.length === 100) break;
+  //         setPairs(checked);
+  //       }
+  //     } catch (err) {
+  //       console.error("Error fetching forex pairs:", err);
+  //     }
+  //   };
+
+  //   if (isScriptLoaded) fetchPairs();
+  // }, [isScriptLoaded]);
 
   useEffect(() => {
     if (window.TradingView) {
@@ -71,6 +100,33 @@ function ForexChart() {
       enable_publishing: false,
     });
   }, [isScriptLoaded, currentSymbol]);
+
+  const validateSymbol = (symbol) => {
+    return new Promise((resolve) => {
+      const testId = "tv-test";
+
+      const div = document.createElement("div");
+      div.id = testId;
+      div.style.display = "none";
+      document.body.appendChild(div);
+      try {
+        new window.TradingView.widget({
+          symbol,
+          container_id: testId,
+          width: 1,
+          height: 1,
+        });
+
+        setTimeout(() => {
+          document.body.removeChild(div);
+          resolve(true);
+        }, 500);
+      } catch (err) {
+        document.body.removeChild(div);
+        resolve(false);
+      }
+    });
+  };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -202,13 +258,13 @@ function ForexChart() {
       </div>
 
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-4">
-        {pairs.map((pair) => (
+        {pairss.map((pair) => (
           <button
             key={pair.symbol}
+            // onClick={() => setCurrentSymbol(pair.symbol)}
             onClick={() => setCurrentSymbol(pair.symbol)}
             className={`px-3 py-1 rounded-full text-sm text-center truncate ${
               currentSymbol === pair.symbol
-              
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
