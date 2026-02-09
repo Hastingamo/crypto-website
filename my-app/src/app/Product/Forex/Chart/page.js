@@ -7,17 +7,17 @@ import { motion } from "framer-motion";
 import ForexChart from "./ForexChart";
 function Page() {
   const [coins, setCoins] = useState([]);
+  const [currentSymbol, setCurrentSymbol] = useState("OANDA:XAUCAD");
   const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
 
   useEffect(() => {
     const fetchCoins = async () => {
       try {
         const res = await fetch(
-          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
+          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
         );
         const data = await res.json();
-        const randomThree = data.slice(0, 7);
-        setCoins(randomThree);
+        setCoins(data.slice(0, 100));
       } catch (err) {
         console.error("Error fetching coins:", err);
       }
@@ -38,7 +38,11 @@ function Page() {
       <h1>chart Page</h1>
       <div className=" flex flex-row">
         <div className=" w-full md:w-4/6 lg:w-3/4">
-        <ForexChart/>
+          <ForexChart
+            currentSymbol={currentSymbol}
+            setCurrentSymbol={setCurrentSymbol}
+            pairs={coins}
+          />
         </div>
         <div className="md:w-1/3 lg:w-1/4 md:bg-[#D9CFC7] md:h-screen">
           <h1>coins list</h1>
@@ -47,38 +51,8 @@ function Page() {
             <h1>price</h1>
             <h1>24h%</h1>
           </div>
-          <div className="hidden md:grid md:grid-cols-1">
-            {/* {coins.map((coin) => (
-              <div key={coin.id} className="p-4 border-b border-gray-300">
-                <div className="flex flex-row">
-                  <Image
-                    src={coin.image}
-                    alt={coin.name}
-                    width={24}
-                    height={24}
-                    className="w-6 h-6 "
-                  />
-                  <p>{coin.symbol.toUpperCase()}</p>
-
-                  <p className="md:ml-5">
-                    ${coin.current_price.toLocaleString()}
-                  </p>
-
-                  <p
-                    className={`font-semibold ${
-                      (coin.price_change_percentage_24h ?? 0) > 0
-                        ? "text-green-500"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {typeof coin.price_change_percentage_24h === "number"
-                      ? `${coin.price_change_percentage_24h.toFixed(2)}%`
-                      : "N/A"}
-                  </p>
-                </div>
-              </div>
-            ))} */}
-            {coins.map((item, index) => {
+          <div className="hidden md:grid md:grid-cols-1 overflow-y-auto max-h-[calc(100vh-100px)]">
+            {coins.slice(0, 10).map((item, index) => {
               const [base, quote] = item.displaySymbol.split("/");
               return (
                 <motion.div
@@ -87,7 +61,14 @@ function Page() {
                   transition={{ duration: 0.5 }}
                   whileHover={{ scale: 1.02 }}
                   key={index}
-                  className="border rounded-lg bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] p-4 shadow-md hover:shadow-lg transition"
+                  onClick={() => setCurrentSymbol(item.symbol)}
+                  className={`border rounded-lg p-4 shadow-md hover:shadow-lg transition cursor-pointer
+                    ${
+                      currentSymbol === item.symbol
+                        ? "bg-blue-100 border-blue-500"
+                        : "bg-[#F2F4F6]"
+                    }
+                    dark:bg-[#5C5470] dark:text-[#DBD8E3]`}
                 >
                   <div className="flex items-center space-x-3">
                     <div className="text-3xl">
