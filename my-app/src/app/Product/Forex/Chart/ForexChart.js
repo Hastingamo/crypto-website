@@ -3,10 +3,9 @@
 import { Search, Minimize2, Maximize2 } from "lucide-react";
 
 import React, { useState, useEffect, useRef } from "react";
-import ForexSearch from "./ForexSearch";
 
-function ForexChart() {
-  const [currentSymbol, setCurrentSymbol] = useState("OANDA:XAUCAD");
+function ForexChart({ symbol, onSymbolChange }) {
+  const [currentSymbol, setCurrentSymbol] = useState(symbol || "OANDA:XAU_CAD");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [search, setSearch] = useState("");
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
@@ -16,54 +15,40 @@ function ForexChart() {
   const [error, setError] = useState(null);
   const [filtered, setFilteredData] = useState([]);
 
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
 
-  // useEffect(() => {
-  //   const fetchPairs = async () => {
-  //     try {
-  //       const res = await fetch(
-  //         `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
-  //       );
-  //       const data = await res.json();
-  //       setPairs(data.slice(0, 100));
-  //       setPairss(data.slice(0, 7));
-  //     } catch (err) {
-  //       console.error("Error fetching forex pairs:", err);
-  //     }
-  //   };
+  useEffect(() => {
+    if (symbol) {
+      setCurrentSymbol(symbol);
+    }
+  }, [symbol]);
 
-  //   fetchPairs();
-  // }, []);
+  const handleSymbolChange = (newSymbol) => {
+    setCurrentSymbol(newSymbol);
+    if (onSymbolChange) {
+      onSymbolChange(newSymbol);
+    }
+  };
 
-  // useEffect(() => {
-  //   const fetchPairs = async () => {
-  //     try {
-  //       const res = await fetch(
-  //         `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
-  //       );
-  //       const data = await res.json();
-  //       const checked = [];
-  //       for (const pair of data) {
-  //         const symbol = pair.symbol.includes(":")
-  //           ? pair.symbol
-  //           : `OANDA:${pair.symbol}`;
-  //         const isValid = await validateSymbol(symbol);
-  //         if (isValid) {
-  //           checked.push({ ...pair, symbol });
-  //         }
-  //         if (checked.length === 100) break;
-  //         setPairs(checked);
-  //       }
-  //     } catch (err) {
-  //       console.error("Error fetching forex pairs:", err);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchPairs = async () => {
+      try {
+        const res = await fetch(
+          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
+        );
+        const data = await res.json();
+        setPairs(data.slice(0, 100));
+        setPairss(data.slice(0, 7));
+      } catch (err) {
+        console.error("Error fetching forex pairs:", err);
+      }
+    };
 
-  //   if (isScriptLoaded) fetchPairs();
-  // }, [isScriptLoaded]);
+    fetchPairs();
+  }, []);
 
   useEffect(() => {
     if (window.TradingView) {
@@ -87,9 +72,12 @@ function ForexChart() {
 
     chartContainerRef.current.innerHTML = "";
 
+    // OANDA symbols in TradingView usually don't have the underscore
+    const tvSymbol = currentSymbol.replace("_", "");
+
     widgetRef.current = new window.TradingView.widget({
       autosize: true,
-      symbol: currentSymbol,
+      symbol: tvSymbol,
       container_id: chartContainerRef.current.id,
       interval: "1",
       timezone: "Etc/UTC",
@@ -101,50 +89,26 @@ function ForexChart() {
     });
   }, [isScriptLoaded, currentSymbol]);
 
-  const validateSymbol = (symbol) => {
-    return new Promise((resolve) => {
-      const testId = "tv-test";
-
-      const div = document.createElement("div");
-      div.id = testId;
-      div.style.display = "none";
-      document.body.appendChild(div);
-      try {
-        new window.TradingView.widget({
-          symbol,
-          container_id: testId,
-          width: 1,
-          height: 1,
-        });
-
-        setTimeout(() => {
-          document.body.removeChild(div);
-          resolve(true);
-        }, 500);
-      } catch (err) {
-        document.body.removeChild(div);
-        resolve(false);
-      }
-    });
-  };
-
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    setError("");
     if (!search.trim()) return;
-    if (search.trim()) {
-      const input = search.trim().toLowerCase();
 
-      const coin = pairs.find(
-        (c) =>
-          c.symbol.toLowerCase() === input || c.name.toLowerCase() === input,
-      );
+    const input = search.trim().toLowerCase();
 
-      if (coin) {
-        setCurrentSymbol(input);
-        setSearch("");
-      } else {
-        setError("Coin does not exist");
-      }
+    const pair = pairs.find(
+      (p) =>
+        p.symbol.toLowerCase() === input ||
+        p.displaySymbol.toLowerCase() === input ||
+        p.description.toLowerCase().includes(input)
+    );
+
+    if (pair) {
+      handleSymbolChange(pair.symbol);
+      setSearch("");
+      setShow(false);
+    } else {
+      setError("Pair does not exist");
     }
   };
 
@@ -158,16 +122,13 @@ function ForexChart() {
     setFilteredData(filtered);
   }, [search, pairs]);
 
-  const Searchss = (e) => {
-    setSearch(e.target.value);
-  };
-
   const onType = (e) => {
     setSearch(e.target.value);
     setShow(true);
   };
 
   const selectedPair = pairs.find((p) => p.symbol === currentSymbol);
+
   useEffect(() => {
     const close = () => setShow(false);
     window.addEventListener("click", close);
@@ -183,7 +144,7 @@ function ForexChart() {
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
           <p className="text-lg text-gray-100 font-semibold">
-            {selectedPair ? selectedPair.displaySymbol : "Loading..."}
+            {selectedPair ? selectedPair.displaySymbol : currentSymbol.split(":")[1] || currentSymbol}
           </p>
           <h2 className="text-sm font-bold text-gray-800">{currentSymbol}</h2>
         </div>
@@ -194,9 +155,10 @@ function ForexChart() {
             className="flex items-center gap-2 w-full sm:w-auto"
           >
             <div className="relative w-full sm:w-48">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder="Enter crypto symbol"
+                placeholder="Enter forex symbol"
                 value={search}
                 onChange={onType}
                 className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-sm"
@@ -212,19 +174,19 @@ function ForexChart() {
                   <div>
                     {filtered.map((item, index) => (
                       <div key={index}>
-                        <div>
-                          <p
-                            className="font-semibold"
-                            onClick={() => setCurrentSymbol(item.symbol)}
-                          >
-                            {item.displaySymbol}
-                          </p>
+                        <div
+                          className="cursor-pointer hover:bg-gray-100 p-1"
+                          onClick={() => {
+                            handleSymbolChange(item.symbol);
+                            setShow(false);
+                            setSearch("");
+                          }}
+                        >
+                          <p className="font-semibold">{item.displaySymbol}</p>
                           <p className="text-gray-600 text-sm">
                             {item.description}
                           </p>
-                          {/* <p className="text-sm text-gray-500">{item.symbol}</p> */}
                         </div>
-                        <div className="flex items-center space-x-3"></div>
                       </div>
                     ))}
                   </div>
@@ -261,8 +223,7 @@ function ForexChart() {
         {pairss.map((pair) => (
           <button
             key={pair.symbol}
-            // onClick={() => setCurrentSymbol(pair.symbol)}
-            onClick={() => setCurrentSymbol(pair.symbol)}
+            onClick={() => handleSymbolChange(pair.symbol)}
             className={`px-3 py-1 rounded-full text-sm text-center truncate ${
               currentSymbol === pair.symbol
                 ? "bg-blue-500 text-white"
