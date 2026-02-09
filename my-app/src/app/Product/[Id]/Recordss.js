@@ -2,8 +2,8 @@
 import { Search, Minimize2, Maximize2 } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 
-function Recordss() {
-  const [currentSymbol, setCurrentSymbol] = useState("btc/usd");
+function Recordss({ initialSymbol = "BINANCE:BTCUSDT" }) {
+  const [currentSymbol, setCurrentSymbol] = useState(initialSymbol);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [search, setSearch] = useState("");
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);

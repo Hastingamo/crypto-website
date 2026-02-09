@@ -185,6 +185,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "../Forex/loa";
 import Record from "../../Component/Record";
+import Recordss from "./Recordss";
 
 function Page() {
   const { Id: id } = useParams();
@@ -242,7 +243,7 @@ function Page() {
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-           <Record initialSymbol={tradingViewSymbol} />
+           <Recordss initialSymbol={tradingViewSymbol} />
         </div>
         
         <div className="bg-white p-6 rounded-2xl shadow-lg">
