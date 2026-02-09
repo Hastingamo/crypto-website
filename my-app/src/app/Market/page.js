@@ -1,14 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Record from "../Component/Record";
-import Image from "next/image";
 
 function Page() {
- 
   return (
-  <>
-  <h1>market pag</h1>
-  </>
+    <div className="p-4 bg-[#AFC9DC] min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 ml-4">Market Overview</h1>
+      <div className="w-full">
+        <Record />
+      </div>
+    </div>
   );
 }
 
