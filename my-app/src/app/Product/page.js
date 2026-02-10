@@ -94,7 +94,6 @@ function Page() {
             <button className="m-4 p-2 bg-blue-600 text-white rounded" onClick={news}>News</button>
                         <button className="m-4 p-2 bg-green-600 text-white rounded" onClick={chart}>chart</button>
 
-            <Link href="Wallet"><button className="m-4 p-2 bg-green-600 text-white rounded">wallet</button></Link>
           </div>
           <div className="grid grid-cols-1 ">
             {filteredData.map((item, index) => (

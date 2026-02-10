@@ -201,13 +201,7 @@ function Record({ initialSymbol = "BINANCE:BTCUSDT" }) {
           </button>
         </div>
       </div>
-      <div className="flex gap-2">
-        <button onClick={() => changeInterval("1D")}>1D</button>
-        <button onClick={() => changeInterval("1h")}>1H</button>
-        <button onClick={() => changeInterval("30")}>30m</button>
-        <button onClick={() => changeInterval("15")}>15m</button>
-        <button onClick={() => changeInterval("5")}>5m</button>
-      </div>
+
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-4">
         {coinss.map((coin) => (
           <button
