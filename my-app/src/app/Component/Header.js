@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import MarketComp from "./MarketComp";
 import Minibar from "./Minibar";
+import ConnectButton from "./ConnectButton";
 
 function Header() {
   // const routers = useRouter()
@@ -27,12 +28,14 @@ function Header() {
        <Link href="/Signup"> <h1>Sign Up</h1> </Link>
        <Link href="/News"> <h1>News</h1> </Link>
        <Link href="/Register"><h1>register</h1></Link>
-       <Link href="Wallet"><h1>wallet</h1></Link>
+       <Link href="/Wallet"><h1>wallet</h1></Link>
+       <ConnectButton />
       </div>
-      <div className="grid p-4 grid-cols-4 md:hidden">
+      <div className="grid p-4 grid-cols-5 md:hidden items-center">
         <h1>Dams</h1>
         <Link href="/Login"><h1>login</h1></Link>
         <Link href="/Signup"><h1>Sign Up</h1></Link>
+        <ConnectButton />
         <Minibar/>
         {/* <img src="" alt="" /> */}
       </div>
