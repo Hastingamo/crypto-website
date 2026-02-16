@@ -12,7 +12,7 @@ function Page() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const { Id } = useParams();
-  const apikey = process.env.NEXT_PUBLIC_COIN_API_KEY;
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   useEffect(() => {
     fetchPairs();

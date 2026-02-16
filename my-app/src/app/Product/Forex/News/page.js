@@ -8,7 +8,7 @@ function Page() {
   const [news, setNews] = useState([]);
   const [load, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   useEffect(() => {
     getNews();
