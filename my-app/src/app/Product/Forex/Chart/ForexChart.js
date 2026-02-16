@@ -21,22 +21,22 @@ function ForexChart() {
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
 
-  // useEffect(() => {
-  //   const fetchPairs = async () => {
-  //     try {
-  //       const res = await fetch(
-  //         `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
-  //       );
-  //       const data = await res.json();
-  //       setPairs(data.slice(0, 100));
-  //       setPairss(data.slice(0, 7));
-  //     } catch (err) {
-  //       console.error("Error fetching forex pairs:", err);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchPairs = async () => {
+      try {
+        const res = await fetch(
+          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
+        );
+        const data = await res.json();
+        setPairs(data.slice(0, 100));
+        setPairss(data.slice(0, 7));
+      } catch (err) {
+        console.error("Error fetching forex pairs:", err);
+      }
+    };
 
-  //   fetchPairs();
-  // }, []);
+    fetchPairs();
+  }, [apikey]);
 
   // useEffect(() => {
   //   const fetchPairs = async () => {
@@ -70,6 +70,7 @@ function ForexChart() {
       setIsScriptLoaded(true);
       return;
     }
+
 
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/tv.js";
@@ -167,7 +168,8 @@ function ForexChart() {
     setShow(true);
   };
 
-  const selectedPair = pairs.find((p) => p.symbol === currentSymbol);
+  const selectedPair = pairs.find((p) => p.symbol.replace(/_/g, "") === currentSymbol);
+
   useEffect(() => {
     const close = () => setShow(false);
     window.addEventListener("click", close);
@@ -215,7 +217,7 @@ function ForexChart() {
                         <div>
                           <p
                             className="font-semibold"
-                            onClick={() => setCurrentSymbol(item.symbol)}
+                            onClick={() => setCurrentSymbol(item.symbol.replace(/_/g, ""))}
                           >
                             {item.displaySymbol}
                           </p>
@@ -262,9 +264,9 @@ function ForexChart() {
           <button
             key={pair.symbol}
             // onClick={() => setCurrentSymbol(pair.symbol)}
-            onClick={() => setCurrentSymbol(pair.symbol)}
+            onClick={() => setCurrentSymbol(pair.symbol.replace(/_/g, ""))}
             className={`px-3 py-1 rounded-full text-sm text-center truncate ${
-              currentSymbol === pair.symbol
+              currentSymbol === pair.symbol.replace(/_/g, "")
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}

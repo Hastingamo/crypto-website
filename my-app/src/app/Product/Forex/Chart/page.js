@@ -7,7 +7,9 @@ import { motion } from "framer-motion";
 import ForexChart from "./ForexChart";
 function Page() {
   const [coins, setCoins] = useState([]);
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+  // const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+    const apikey = process.env.NEXT_PUBLIC_COINGECKO_API_KEY;
+
 
   useEffect(() => {
     const fetchCoins = async () => {

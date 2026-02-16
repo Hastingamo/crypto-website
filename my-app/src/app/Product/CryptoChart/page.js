@@ -56,13 +56,13 @@ function Page() {
   return (
   <div>
       <h1>chart Page</h1>
-      <div className="hidden md:flex md:flex-row">
+      <div className=" md:flex md:flex-row">
         <div className=" w-full md:w-4/6 lg:w-3/4">
           <Record />
         </div>
-        <div className="md:w-1/3 lg:w-1/4 md:bg-[#D9CFC7] md:h-screen">
+        <div className=" md:w-1/3 lg:w-1/4 md:bg-[#D9CFC7] md:h-screen">
           <h1>coins list</h1>
-          <div className="grid grid-cols-3">
+          <div className=" grid grid-cols-3">
           <h1>name</h1>
           <h1>price</h1>
           <h1>24h%</h1>
@@ -98,11 +98,12 @@ function Page() {
           ))} 
           </div>
 
+
         </div>
       </div>
-      <div className='flex flex-col md:hidden'>
+      {/* <div className='flex flex-col md:hidden'>
           <h1>pls rotate your phone to size </h1>
-      </div>
+      </div> */}
     </div>
   )
 }

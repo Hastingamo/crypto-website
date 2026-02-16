@@ -132,7 +132,7 @@ function Record({ initialSymbol = "BINANCE:BTCUSDT" }) {
   return (
     <div
       className={`bg-[#C9B59C] rounded-2xl shadow-xl p-4
-      ${isFullScreen ? "fixed inset-0 w-full h-full z-50" : "relative"}`}
+      ${isFullScreen ? "fixed inset-0 w-full h-screen z-50" : "relative"}`}
     >
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
