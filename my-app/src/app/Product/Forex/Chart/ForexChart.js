@@ -16,27 +16,27 @@ function ForexChart() {
   const [error, setError] = useState(null);
   const [filtered, setFilteredData] = useState([]);
 
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
 
-  // useEffect(() => {
-  //   const fetchPairs = async () => {
-  //     try {
-  //       const res = await fetch(
-  //         `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
-  //       );
-  //       const data = await res.json();
-  //       setPairs(data.slice(0, 100));
-  //       setPairss(data.slice(0, 7));
-  //     } catch (err) {
-  //       console.error("Error fetching forex pairs:", err);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchPairs = async () => {
+      try {
+        const res = await fetch(
+          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
+        );
+        const data = await res.json();
+        setPairs(data.slice(0, 100));
+        setPairss(data.slice(0, 7));
+      } catch (err) {
+        console.error("Error fetching forex pairs:", err);
+      }
+    };
 
-  //   fetchPairs();
-  // }, []);
+    fetchPairs();
+  }, [apikey]);
 
   // useEffect(() => {
   //   const fetchPairs = async () => {
@@ -140,7 +140,7 @@ function ForexChart() {
       );
 
       if (coin) {
-        setCurrentSymbol(input);
+        setCurrentSymbol(coin.symbol.replace(/_/g, ""));
         setSearch("");
       } else {
         setError("Coin does not exist");
@@ -167,7 +167,7 @@ function ForexChart() {
     setShow(true);
   };
 
-  const selectedPair = pairs.find((p) => p.symbol === currentSymbol);
+  const selectedPair = pairs.find((p) => p.symbol.replace(/_/g, "") === currentSymbol);
   useEffect(() => {
     const close = () => setShow(false);
     window.addEventListener("click", close);
@@ -215,7 +215,7 @@ function ForexChart() {
                         <div>
                           <p
                             className="font-semibold"
-                            onClick={() => setCurrentSymbol(item.symbol)}
+                            onClick={() => setCurrentSymbol(item.symbol.replace(/_/g, ""))}
                           >
                             {item.displaySymbol}
                           </p>
@@ -262,9 +262,9 @@ function ForexChart() {
           <button
             key={pair.symbol}
             // onClick={() => setCurrentSymbol(pair.symbol)}
-            onClick={() => setCurrentSymbol(pair.symbol)}
+            onClick={() => setCurrentSymbol(pair.symbol.replace(/_/g, ""))}
             className={`px-3 py-1 rounded-full text-sm text-center truncate ${
-              currentSymbol === pair.symbol
+              currentSymbol === pair.symbol.replace(/_/g, "")
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
