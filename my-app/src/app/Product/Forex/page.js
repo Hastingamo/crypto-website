@@ -32,6 +32,10 @@ function Page() {
   //   }
   // };
 
+ const forexs = () => {
+    const selectedPair = pairs.find((p) => p.symbol.replace(/_/g, "") === currentSymbol);
+    router.push('/Product/Forex');
+  };
   
   const forex = () => {
 
