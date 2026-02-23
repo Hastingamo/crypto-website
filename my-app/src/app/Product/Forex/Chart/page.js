@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ForexChart from "./ForexChart";
+import Link from "next/link";
 function Page() {
   const [coins, setCoins] = useState([]);
   // const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
@@ -18,8 +19,7 @@ function Page() {
           `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
         );
         const data = await res.json();
-        const randomThree = data.slice(0, 7);
-        setCoins(randomThree);
+        setCoins(data);
       } catch (err) {
         console.error("Error fetching coins:", err);
       }
@@ -83,27 +83,28 @@ function Page() {
             {coins.map((item, index) => {
               const [base, quote] = item.displaySymbol.split("/");
               return (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  whileHover={{ scale: 1.02 }}
-                  key={index}
-                  className="border rounded-lg bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] p-4 shadow-md hover:shadow-lg transition"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="text-3xl">
-                      {getFlag(base)} / {getFlag(quote)}
+                <Link key={index} href={`/Product/Forex/${item.description}`}>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: 1.02 }}
+                    className="border rounded-lg bg-[#F2F4F6] dark:bg-[#5C5470] dark:text-[#DBD8E3] p-4 shadow-md hover:shadow-lg transition mb-2 block"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="text-3xl">
+                        {getFlag(base)} / {getFlag(quote)}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 dark:text-gray-100">{item.displaySymbol}</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">
+                          {item.description}
+                        </p>
+                        {/* <p className="text-sm text-gray-500">{item.symbol}</p> */}
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-semibold">{item.displaySymbol}</p>
-                      <p className="text-gray-600 text-sm">
-                        {item.description}
-                      </p>
-                      {/* <p className="text-sm text-gray-500">{item.symbol}</p> */}
-                    </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </Link>
               );
             })}
           </div>
