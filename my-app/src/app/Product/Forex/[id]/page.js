@@ -7,58 +7,69 @@ import Chart from "./Chart";
 
 function Page() {
   const Router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [pairs, setPairs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [pair, setPair] = useState(null);
   const [error, setError] = useState(null);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
-  const { Id: id } = useParams();
-  const apikey = process.env.NEXT_PUBLIC_COIN_API_KEY;
+  const { id } = useParams();
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   useEffect(() => {
-    fetchPairs();
+    if (id) {
+      fetchPair();
+    }
   }, [id]);
 
-  const fetchPairs = async () => {
+  const fetchPair = async () => {
     try {
+      setLoading(true);
       const res = await fetch(
         `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
       ).then((res) => res.json());
-      setPairs(res);
-      console.log("Pairs data:", res);
+
+      const decodedId = decodeURIComponent(id);
+      const foundPair = res.find((p) => p.symbol === id || p.symbol === decodedId);
+      if (foundPair) {
+        setPair(foundPair);
+      } else {
+        setError("Pair not found");
+      }
     } catch (err) {
-      setError("pairs were not found");
+      setError("Error fetching forex data");
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
   const Navigate = () => {
-    Router.push("/Product/Forex/Notess");
+    Router.push("/Product/Forex/Notesss");
   };
 
-if (!pairs?.symbol) return null;
-const tradingViewSymbol = `OANDA:${pairs.symbol.toUpperCase()}`;
-      
-      
+  if (loading) return <div className="p-6">Loading...</div>;
+  if (error) return <div className="p-6 text-red-500">{error}</div>;
+  if (!pair) return <div className="p-6">Pair not found</div>;
+
+  const symbol = pair.symbol.replace(/_/g, "").toUpperCase();
+  const tradingViewSymbol = symbol.includes(":") ? symbol : `OANDA:${symbol}`;
 
   return (
-    <div>
-      <h1>Product Id Page</h1>
-      
-      <h1>{pairs.Id}</h1>
-      <h1>{pairs.description}</h1>
-     <div className="grid grid-cols-1-1">
-            <div className="lg:col-span-2">
-               <Chart initialSymbol={tradingViewSymbol} />
-            </div>
-      <div >
-        <h1 onClick={Navigate} className="cursor-pointer text-blue-500 hover:underline">create Note</h1>
-      </div>
-     </div>
-
+    <div className="p-6 bg-[#AFC9DC] min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-3xl font-bold">{pair.displaySymbol}</h1>
+          <p className="text-gray-700">{pair.description}</p>
+        </div>
+        <button
+          onClick={Navigate}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          Create Note
+        </button>
       </div>
 
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <Chart initialSymbol={tradingViewSymbol} />
+      </div>
+    </div>
   );
 }
 

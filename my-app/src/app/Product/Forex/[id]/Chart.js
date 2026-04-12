@@ -3,8 +3,8 @@
 import { Search, Minimize2, Maximize2 } from "lucide-react";
 
 import React, { useState, useEffect, useRef } from "react";
-function Chart(initialSymbol = "OANDA:XAUCAD") {
-  const [currentSymbol, setCurrentSymbol] = useState(initialSymbol );
+function Chart({ initialSymbol = "OANDA:XAUCAD" }) {
+  const [currentSymbol, setCurrentSymbol] = useState(initialSymbol);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [search, setSearch] = useState("");
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
@@ -14,19 +14,20 @@ function Chart(initialSymbol = "OANDA:XAUCAD") {
   const [error, setError] = useState(null);
   const [filtered, setFilteredData] = useState([]);
 
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
 
   useEffect(() => {
     const fetchPairs = async () => {
+      if (!apikey) return;
       try {
         const res = await fetch(
           `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
         );
         const data = await res.json();
-        setPairs(data.slice(0, 100));
+        setPairs(data);
         setPairss(data.slice(0, 7));
       } catch (err) {
         console.error("Error fetching forex pairs:", err);
@@ -35,6 +36,12 @@ function Chart(initialSymbol = "OANDA:XAUCAD") {
 
     fetchPairs();
   }, [apikey]);
+
+  useEffect(() => {
+    if (initialSymbol) {
+      setCurrentSymbol(initialSymbol);
+    }
+  }, [initialSymbol]);
 
   // useEffect(() => {
   //   const fetchPairs = async () => {
