@@ -6,7 +6,7 @@ import Link from "next/link";
 import Loader from "./loa";
 function Page() {
   // const apikeys = "MYBRGA85QP1HBBAL";
-  const apikey = process.env.NEXT_PUBLIC_COINGECKO_API_KEY;
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -127,7 +127,7 @@ function Page() {
                       {getFlag(base)} / {getFlag(quote)}
                     </div>
                     <div>
-                      <Link href={`/Product/Forex/${item.description}`}>
+                      <Link href={`/Product/Forex/${item.symbol}`}>
                         <p className="font-semibold">{item.symbol}</p>
                       </Link>
 
