@@ -15,7 +15,7 @@ function Page() {
     fetch(`https://finnhub.io/api/v1/news?category=crypto&token=${apikey}`)
       .then((response) => response.json())
       .then((newsData) => {
-        setNewsData(newsData.slice(0, 20));
+        setNewsData(newsData);
         setLoading(false);
         console.log(newsData);
       });
@@ -51,7 +51,7 @@ function Page() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
             {filtered.map((newsItem, index) => (
               <div
                 key={index}

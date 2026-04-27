@@ -107,7 +107,7 @@ function Page() {
                 viewport={{once:true}}
                 whileInView={{opacity: 1, y:0}}
                 className="">
-                    <Link href={`/Product/${item.id}`} className="m-4 p-6 border-2 bg-[#F2F4F6]  xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-7">
+                    <Link href={`/Product/${item.id}`} className="m-4 p-6 border-2 bg-[#F2F4F6]  xl:ml-[2rem] rounded-2xl xl:rounded-[10px] xl:pt-4 xl:pb-4 grid  md:grid-cols-2 lg:p-0 lg:grid-cols-4 xl:grid-cols-6">
                      <Image src={item.image} alt={item.name} width={50} height={50} />
                 <p>
                   #{index + 1} {item.name} ({item.symbol.toUpperCase()} || {item.category})

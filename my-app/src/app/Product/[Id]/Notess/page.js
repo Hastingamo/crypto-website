@@ -2,9 +2,11 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 function Page() {
   const [notes, setNotes] = useState([]);
+  const { Id: id } = useParams();
 
   useEffect(() => {
     const saved = localStorage.getItem("homeNotes");
@@ -40,7 +42,7 @@ function Page() {
           ))
         ) : (
           <div className="fixed bottom-10 right-10">
-            <Link href="/Product/Note/Pages">
+            <Link href={`/Product/${id}/Notess/Note`}>
            <Image src={"/images/newFile.png"} alt="note" width={15} height={15}/>
             </Link>
             <h1>add</h1>

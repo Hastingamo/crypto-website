@@ -118,10 +118,10 @@ function Recordss({ initialSymbol = "BINANCE:BTCUSDT" }) {
     setFilteredData(filtered);
   }, [search, coins]);
 
-  const symbolOnly = currentSymbol.split("/")[0];
-  const selectedCoin = coins.find(
-    (coin) => coin.symbol.toUpperCase() === symbolOnly.toUpperCase()
-  );
+  const selectedCoin = coins.find((p) => p.symbol.replace(/_/g, "") === currentSymbol);
+  //  selectedCoin = coins.find(
+  //   (coin) => coin.symbol.toUpperCase() === symbolOnly.toUpperCase()
+  // );
   useEffect(() => {
   const close = () => setShow(false);
   window.addEventListener("click", close);

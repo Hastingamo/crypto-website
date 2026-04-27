@@ -29,13 +29,26 @@ function Header() {
        <Link href="/Register"><h1>register</h1></Link>
        <Link href="Wallet"><h1>wallet</h1></Link>
       </div>
-      <div className="grid p-4 grid-cols-4 md:hidden">
-        <h1>Dams</h1>
-        <Link href="/Login"><h1>login</h1></Link>
-        <Link href="/Signup"><h1>Sign Up</h1></Link>
-        <Minibar/>
-        {/* <img src="" alt="" /> */}
-      </div>
+       <nav style={{
+          position: "relative", display: "flex", justifyContent: "space-between",
+          alignItems: "center", padding: "1.5rem 2.5rem",
+          borderBottom: "0.5px solid rgba(99,102,241,0.2)",
+        }} className="md:hidden">
+          <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#6366f1", display: "inline-block", animation: "pulse 2s infinite" }} />
+            DAMS
+          </div>
+
+          {/* <ul style={{ display: "flex", gap: "2rem", listStyle: "none" }}>
+            {["Markets", "Trade", "Portfolio", "Learn"].map(link => (
+              <li key={link}><a href="#" className="nav-link">{link}</a></li>
+            ))}
+          </ul> */}
+
+          <button className="nav-cta" onClick={() => router.push("/Product")}>
+            Launch App →
+          </button>
+        </nav>
     </>
   );
 }
