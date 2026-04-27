@@ -9,7 +9,8 @@ export default function MarketComp({ label, items }) {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 hover:text-blue-500"
+        style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }}
+        className="mt-2"
       >
         {label}
         <span>▼</span>

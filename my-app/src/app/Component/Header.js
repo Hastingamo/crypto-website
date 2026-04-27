@@ -12,9 +12,11 @@ function Header() {
   // }
   return (
     <>
-      <div className="hidden md:flex md:gap-10 md:flex-row md:p-4 bg-[#F2F4F6]">
-        <Link href="/"><h1>Dams</h1></Link  >
-        <MarketComp
+      <div className="hidden xl:h-16 xl:flex xl:gap-10 xl:flex-row xl:p-4 bg-[#050810]">
+     <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#6366f1", display: "inline-block", animation: "pulse 2s infinite" }} />
+            DAMS
+          </div>        <MarketComp
           label="Product"
           items={[
             { label: "Forex", href: "/Product/Forex" },
@@ -22,18 +24,17 @@ function Header() {
             // { label: "Accessories", href: "/Product/accessories" },
           ]}
         />   
-            <Link  href="/Market"> <h1>Market</h1> </Link>
-       <Link href="/Login"> <h1>Login</h1> </Link>
-       <Link href="/Signup"> <h1>Sign Up</h1> </Link>
-       <Link href="/News"> <h1>News</h1> </Link>
-       <Link href="/Register"><h1>register</h1></Link>
-       <Link href="Wallet"><h1>wallet</h1></Link>
+            <Link style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }}  href="/Market"> <h1>Market</h1> </Link>
+       <Link style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }} href="/Login"> <h1>Login</h1> </Link>
+       <Link style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }}  href="/Signup"> <h1>Sign Up</h1> </Link>
+       <Link style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }} href="/News"> <h1>News</h1> </Link>
+       <Link style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }} href="/Register"><h1>register</h1></Link>
+       <Link style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }} href="Wallet"><h1>wallet</h1></Link>
+           <button className="nav-cta text-white" onClick={() => router.push("/Product")}>
+            Launch App →
+          </button>
       </div>
-       <nav style={{
-          position: "relative", display: "flex", justifyContent: "space-between",
-          alignItems: "center", padding: "1.5rem 2.5rem",
-          borderBottom: "0.5px solid rgba(99,102,241,0.2)",
-        }} className="md:hidden">
+       <nav  className="xl:hidden bg-[#050810]">
           <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.5px", color: "#fff", display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#6366f1", display: "inline-block", animation: "pulse 2s infinite" }} />
             DAMS
@@ -45,7 +46,7 @@ function Header() {
             ))}
           </ul> */}
 
-          <button className="nav-cta" onClick={() => router.push("/Product")}>
+          <button className="nav-cta text-white" onClick={() => router.push("/Product")}>
             Launch App →
           </button>
         </nav>

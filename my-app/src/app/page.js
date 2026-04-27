@@ -255,11 +255,11 @@ export default function Page() {
         .refresh-btn:hover { color: rgba(240,240,240,0.7); }
       `}</style>
 
-      <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
+      <div style={{ position: "relative", minHeight: "10vh", overflow: "hidden" }}>
 
         {/* Grid background */}
         <div style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
+          position: "absolute", inset:0, pointerEvents: "none",
           backgroundImage: "linear-gradient(rgba(99,102,241,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.07) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }} />
@@ -343,17 +343,21 @@ export default function Page() {
           </div>
 
           {/* Right */}
-          <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
             <div style={{
               display: "inline-flex", alignItems: "center", gap: 5,
               background: "rgba(99,102,241,0.1)", border: "0.5px solid rgba(99,102,241,0.25)",
               color: "#a5b4fc", fontFamily: "'Space Mono', monospace",
               fontSize: 10, padding: "4px 10px", borderRadius: 100,
-              letterSpacing: "0.08em", marginBottom: 12, textTransform: "uppercase",
+              letterSpacing: "0.08em", marginBottom: 4, textTransform: "uppercase",
+              alignSelf: "flex-start",
             }}>
-              <svg width="7" height="7" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3.5" fill="#14b8a6" /></svg>
+              <svg width="7" height="7" viewBox="0 0 7 7">
+                <circle cx="3.5" cy="3.5" r="3.5" fill="#14b8a6" />
+              </svg>
               Live prices
             </div>
+
 
             {loading
               ? [1, 2, 3, 4].map(i => <SkeletonCard key={i} />)
