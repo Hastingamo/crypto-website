@@ -3,7 +3,7 @@
 import { Search, Minimize2, Maximize2 } from "lucide-react";
 
 import React, { useState, useEffect, useRef } from "react";
-function Chart(initialSymbol = "OANDA:XAUCAD") {
+function Chart({ initialSymbol = "OANDA:XAUCAD" }) {
   const [currentSymbol, setCurrentSymbol] = useState(initialSymbol );
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [search, setSearch] = useState("");
@@ -14,7 +14,7 @@ function Chart(initialSymbol = "OANDA:XAUCAD") {
   const [error, setError] = useState(null);
   const [filtered, setFilteredData] = useState([]);
 
-  const apikey = "d3s1cj1r01qldtrbhibgd3s1cj1r01qldtrbhic0";
+  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);

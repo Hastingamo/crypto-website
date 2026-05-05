@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-// import Recordss from "./Recordss";
+import Chart from "./Chart";
 import Loader from "../loa";
 
 function Page() {
-  const { Id: id } = useParams(); // e.g. EURUSD
+  const { id: rawId } = useParams(); // e.g. OANDA:EUR_USD
+  const id = rawId ? decodeURIComponent(rawId) : null;
   const [loading, setLoading] = useState(true);
   const [forex, setForex] = useState(null);
   const [error, setError] = useState(null);
@@ -19,8 +20,10 @@ function Page() {
       try {
         setLoading(true);
 
+        const fetchSymbol = id?.startsWith("OANDA:") ? id : `OANDA:${id}`;
+
         const response = await fetch(
-          `https://finnhub.io/api/v1/quote?symbol=OANDA:${id}&token=${apiKey}`
+          `https://finnhub.io/api/v1/quote?symbol=${fetchSymbol}&token=${apiKey}`
         );
 
         if (!response.ok) throw new Error("Forex data not found");
@@ -64,7 +67,7 @@ function Page() {
     );
   }
 
-  const tradingViewSymbol = `OANDA:${id}`;
+  const tradingViewSymbol = id ? (id.startsWith("OANDA:") ? id : `OANDA:${id}`).replace(/_/g, "") : "";
 
   return (
     <div className="p-4 bg-[#AFC9DC] min-h-screen">
@@ -85,7 +88,7 @@ function Page() {
         
         {/* CHART */}
         <div className="lg:col-span-2">
-          {/* <Recordss initialSymbol={tradingViewSymbol} /> */}
+          <Chart initialSymbol={tradingViewSymbol} />
         </div>
 
         {/* STATS */}
