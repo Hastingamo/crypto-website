@@ -17,22 +17,26 @@ function Page() {
 
   useEffect(() => {
     const fetchForex = async () => {
+      if (!id) return;
       try {
         setLoading(true);
+        setError(null);
 
-        const fetchSymbol = id?.startsWith("OANDA:") ? id : `OANDA:${id}`;
+        const fetchSymbol = id.startsWith("OANDA:") ? id : `OANDA:${id}`;
 
         const response = await fetch(
           `https://finnhub.io/api/v1/quote?symbol=${fetchSymbol}&token=${apiKey}`
         );
 
-        if (!response.ok) throw new Error("Forex data not found");
+        if (!response.ok) {
+          throw new Error(`Forex data not found for ${fetchSymbol}`);
+        }
 
         const data = await response.json();
 
         // Finnhub returns { c, h, l, o, pc }
         if (!data || data.c === 0) {
-          throw new Error("Invalid forex data");
+          throw new Error(`Invalid forex data for ${fetchSymbol}`);
         }
 
         setForex(data);
@@ -43,7 +47,7 @@ function Page() {
       }
     };
 
-    if (id) fetchForex();
+    fetchForex();
   }, [id, apiKey]);
 
   if (loading) {

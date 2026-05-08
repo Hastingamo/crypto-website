@@ -156,7 +156,7 @@ import Link from "next/link";
 import Loader from "./loa";
 function Page() {
   // const apikeys = "MYBRGA85QP1HBBAL";
-  const apikey = process.env.NEXT_PUBLIC_COINGECKO_API_KEY ;
+  const apiKey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -190,7 +190,7 @@ function Page() {
   const forex = () => {
 
         fetch(
-        `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`
+        `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apiKey}`
     )
       .then((response) => response.json())
       .then((data) => {

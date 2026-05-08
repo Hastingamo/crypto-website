@@ -14,7 +14,7 @@ function Chart({ initialSymbol = "OANDA:XAUCAD" }) {
   const [error, setError] = useState(null);
   const [filtered, setFilteredData] = useState([]);
 
-  const apikey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_FINNHUB_API_KEY;
 
   const chartContainerRef = useRef(null);
   const widgetRef = useRef(null);
@@ -23,7 +23,7 @@ function Chart({ initialSymbol = "OANDA:XAUCAD" }) {
     const fetchPairs = async () => {
       try {
         const res = await fetch(
-          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apikey}`,
+          `https://finnhub.io/api/v1/forex/symbol?exchange=OANDA&token=${apiKey}`,
         );
         const data = await res.json();
         setPairs(data.slice(0, 100));
@@ -34,7 +34,7 @@ function Chart({ initialSymbol = "OANDA:XAUCAD" }) {
     };
 
     fetchPairs();
-  }, [apikey]);
+  }, [apiKey]);
 
   // useEffect(() => {
   //   const fetchPairs = async () => {
